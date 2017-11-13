@@ -1,0 +1,48 @@
+<!-- Introduction-->
+<div class="container">
+  <!--header-->
+  <div class="jumbotron">
+    <div class="row">
+      <div class="col-xs-12">
+        <h1 class="text-center">Sir Isaac Newton</h1>
+        <h2 class="text-center"><em>English Scientist who invented Calculus</em></h2>
+        <div class="thumbnail"><img src="https://upload.wikimedia.org/wikipedia/commons/3/39/GodfreyKneller-IsaacNewton-1689.jpg">
+          <div class="caption text-center"> Sir Isaac Newton most famous picture of himself depicted by some artist 
+          </div> <!--caption-->
+        </div><!-- thumbnail-->
+        <!-- information -->
+        <div class="col-md-8 col-md-offset-2 col-xs-12 col-sm-10 col-sm-offset-1">
+          <h2> <strong> Isaac Newtons Timeline</strong></h2>
+            <ul>
+              <li><strong>1642</strong>-Isaac Newton Born</li>
+              <li><strong>1653</strong>-Isaac Newton builds a water clock, and a windmill model</li>
+              <li><strong>1661</strong>-Isaac Newton enrolls at Cambridge University</li>
+              <li><strong>1665</strong>-Receives Bachelors art degree</li>
+              <li><strong>1671</strong>-Newton joins the Royal Society of London,.the most famous scientific society in his country</li>
+              <li><strong>1687</strong>-Newton publishes his major work, Principia, which covers the 3 laws of motions and the law of universal gravitation</li>
+              <li><strong>1703</strong>-Newton becomes president of the Royal Society. </li>
+              <li><strong>1705</strong>-Newton is knighted </li>
+              <li><strong>1727</strong>-Newton dies</li>
+            </ul>
+        </div><!-- List items history -->
+        <div class="col-md-8 col-md-offset-2 col-xs-12 col-sm-10 col-sm-offset-1">
+          <hr>
+          <h2><strong>Newtons 3 laws of physics</strong></h2>
+          <div class="thumbnail">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Simple_gravity_pendulum.svg/300px-Simple_gravity_pendulum.svg.png">
+            <div class="caption text-center"> Pendulum Physics Experiment</div>
+          </div><!--thumbnail pendulum-->
+            <h3><strong><em>1sy law</strong></em></h3>
+            <p> Newton's first law states that every object will remain at rest or in uniform motion in a straight line unless compelled to change its state by the action of an external force. This is normally taken as the definition of inertia. The key point here is that if there is no net force acting on an object (if all the external forces cancel each other out) then the object will maintain a constant velocity. If that velocity is zero, then the object remains at rest. If an external force is applied, the velocity will change because of the force.</p>
+             <h3><strong><em>2nd law</strong></em></h3>
+             <p> The second law explains how the velocity of an object changes when it is subjected to an external force. The law defines a force to be equal to change in momentum (mass times velocity) per change in time. Newton also developed the calculus of mathematics, and the "changes" expressed in the second law are most accurately defined in differential forms. (Calculus can also be used to determine the velocity and location variations experienced by an object subjected to an external force.) For an object with a constant mass m, the second law states that the force F is the product of an object's mass and its acceleration a: </p>
+             <h3><strong><em>3rd law</strong></em></h3>
+             <p> The third law states that for every action (force) in nature there is an equal and opposite reaction. In other words, if object A exerts a force on object B, then object B also exerts an equal force on object A. Notice that the forces are exerted on different objects. The third law can be used to explain the generation of lift by a wing and the production of thrust by a jet engine.</p>
+          </div><!-- 3 laws -->
+        </div>
+      </div><!--col-xs-12-->
+    </div><!-- row-->
+  </div><!-- jumbotron-->
+  <footer class="text-center">
+      <p> Read more about Sir Isaac Newton on his <a href="https://en.wikipedia.org/wiki/Isaac_Newton" target="_blank"> wikipedia page<a></p>
+</div><!--container-->
