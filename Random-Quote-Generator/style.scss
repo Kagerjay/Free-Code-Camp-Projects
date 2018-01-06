@@ -1,0 +1,37 @@
+body {
+  transition: background-color 1s; /* changes fade on randomcolor */
+  padding-top: 100px;
+  text-align: center;
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+header {
+  margin: 0 auto;
+  width: 400px;
+}
+.quote-container {
+  width: 400px;
+  height: 400px;
+  margin: 0 auto;
+  background-color: white;
+  border: 10px solid grey;
+}
+.quote-box {
+  margin: 50px;
+  text-align: left;
+  font-size: 20px;
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+  &__msg {
+    padding:10px;
+  }
+  &__author {
+    &:before {content: "- "};
+    font-style: italic;
+    padding: 10px;
+  }
+}
+
+.footer {
+  padding-top: 10px;
+  color: white;
+}
