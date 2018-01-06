@@ -1,0 +1,12 @@
+/*Global Styles
+----------------------------------*/
+
+body {
+  margin-top: 60px;
+}
+
+hr {
+  padding: 1px;
+  margin: 10px;
+  background-color: black;
+}
