@@ -1,0 +1,12 @@
+/*
+ * Author: Vincent Tang
+ * Date Created: !(12/17/2017 22:15)
+ * --------------------
+ * https://stackoverflow.com/questions/47842732/javascript-unexpected-run-order, I had async issues with navigator.geolocation
+ * https://stackoverflow.com/questions/47853190/javascript-access-json-property - I had issues accessing a property, as it was an array of objects
+ */
+
+body {
+  background-color: black;
+  color: white;
+}

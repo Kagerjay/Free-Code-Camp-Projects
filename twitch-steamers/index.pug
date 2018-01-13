@@ -1,0 +1,20 @@
+//output:index.html
+link(rel='stylesheet', type='text/css', href='../bootstrap.css')
+link(rel='stylesheet', type='text/css', href='style.min.css')
+script(type='text/javascript', src='../jquery-3.2.1.min.js')
+script(type='text/javascript', src='script.js')
+
+.container
+  h1.text-center Twitch Streamers
+  .row#filterBy
+    .col-4
+      button#btn-all All
+    .col-4
+      button#btn-online Online
+    .col-4
+      button#btn-offline Offline
+  .row#streamers
+    .col-2#logo
+      img(src="https://static-cdn.jtvnw.net/jtv_user_pictures/robotcaleb-profile_image-9422645f2f0f093c-300x300.png")
+    .col-10#status
+      p Channel Robot Caleb is currently Offline
