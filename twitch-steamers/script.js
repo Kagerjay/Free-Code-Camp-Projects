@@ -46,12 +46,14 @@ function getChannelInfo() {
 $(document).ready(function(){
   getChannelInfo();
   $("#btn-all").click(function(){
-    // (".online").addClass(".hide");
+    $(".offline,.online").removeClass("hide");
   });
   $("#btn-online").click(function(){
-    // $("active")
+    $(".offline,.online").removeClass("hide");
+    $(".offline").addClass("hide");
   });
   $("#btn-offline").click(function(){
-    // toggle offline
+    $(".offline,.online").removeClass("hide");
+    $(".online").addClass("hide");
   });
 });
