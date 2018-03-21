@@ -4,7 +4,7 @@
 }
 
 .calculator {
-  width: 400px;
+  padding: 10px;
   height: 400px;
   border: 2px solid black;
 }
@@ -13,18 +13,26 @@
 /* https://gridbyexample.com/examples/example19/ */
 .buttons {
   display: grid;
-  grid-template-columns: repeat(4,100px);
-  grid-template-rows: 20% 20% 20% 20% 20%;
+  grid-template-columns: repeat(4,50px);
+  grid-template-rows: repeat(5,20%);
+  grid-gap: 10px;
 }
-
 button {
-  box-sizing: border-box;
+  padding: 5px;
+  border-radius: 5px;
+  font-size: 110%;
+  background-color: black;
+  color: white;
 }
-#equalButton {
+button[value="AC"],
+button[value="CE"]{
+  background-color: red;
+}
+#equal-button {
   grid-column: 4/5;
   grid-row: 4/6;
 }
-#zeroButton {
+#zero-button {
   grid-row: 5/6;
   grid-column: 1/3;
 }
