@@ -1,0 +1,30 @@
+.container {
+  display: flex;
+  justify-content: center;
+}
+
+.calculator {
+  width: 400px;
+  height: 400px;
+  border: 2px solid black;
+}
+
+/* https://gridbyexample.com/examples/example7/ */
+/* https://gridbyexample.com/examples/example19/ */
+.buttons {
+  display: grid;
+  grid-template-columns: repeat(4,100px);
+  grid-template-rows: 20% 20% 20% 20% 20%;
+}
+
+button {
+  box-sizing: border-box;
+}
+#equalButton {
+  grid-column: 4/5;
+  grid-row: 4/6;
+}
+#zeroButton {
+  grid-row: 5/6;
+  grid-column: 1/3;
+}
