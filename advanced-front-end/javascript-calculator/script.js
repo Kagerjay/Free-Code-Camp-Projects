@@ -32,45 +32,45 @@ var operations = {
 // Display, Read, Update, Destroy
 // VIEWS + CONTROLLER IN JQUERY
 $(document).ready(function(){
-  //////////// MATH OPERATIONS //////////
-  // Add
-  $("button[value='+']").on("click", function(){
-    console.log("add");
-  });
-  // Subtract
-  $("button[value='-']").on("click", function(){
-    console.log("subtracted");
-  });
-  // Multiply
-  $("button[value='x']").on("click", function(){
-    console.log("mult");
-  });
-  // Divide
-  $("button[value='÷']").on("click", function(){
-    console.log("divide");
-  });
 
-  //////////// CACLULATOR OPERATIONS //////////
-  // equal
-  $("button[value='=']").on("click", function(){
-    console.log("equal");
+  // Condense down into one click button
+  $("button").on("click", function(){
+    let buttonValue = $(this).attr("value");
+    switch(buttonValue) {
+      // Numbers
+      case '.':
+      case '0':
+      case '1':
+      case '2':
+      case '3':
+      case '4':
+      case '5':
+      case '6':
+      case '7':
+      case '8':
+      case '9':
+        console.log('Num ' + buttonValue);
+        break;
+      // Operators
+      case 'x':
+      case '÷':
+      case '-':
+      case '+':
+        console.log('Operator ' + buttonValue);
+        break;
+      // Other Essentials
+      case '=':
+        console.log('Essential' + buttonValue);
+        break;
+      case 'AC':
+        console.log('Essential' + buttonValue);
+        break;
+      case 'CE':
+        console.log('Essential' + buttonValue);
+        break;
+      default:
+        console.log('ERROR');
+        break;
+    }
   });
-  // All Clear [AC]
-  $("button[value='AC']").on("click", function(){
-    console.log("AC");
-  });
-  // Clear Entry [CE]
-  $("button[value='CE']").on("click", function(){
-    console.log("CE");
-  });
-  $("button[value='.']").on("click", function(){
-    console.log("I'm a dot");
-  })
-
-  //////////// EVERY NUMBER BUTTON //////////
-  $(".num").on("click", function(){
-    console.log("Im a number");
-  });
-
-
 });
