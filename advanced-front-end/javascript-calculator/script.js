@@ -17,4 +17,38 @@ var operations = {
 
 // VIEWS + CONTROLLER IN JQUERY
 $(document).ready(function(){
+
+  //////////// MATH OPERATIONS //////////
+  // Add
+  $("button[value='+']").on("click", function(){
+    console.log("added");
+  });
+  // Subtract
+  $("button[value='-']").on("click", function(){
+    console.log("subtracted");
+  });
+  // Multiply
+  $("button[value='x']").on("click", function(){
+    console.log("mult");
+  });
+  // Divide
+  $("button[value='÷']").on("click", function(){
+    console.log("divide");
+  });
+
+  //////////// CACLULATOR OPERATIONS //////////
+  // equal
+  $("button[value='=']").on("click", function(){
+    console.log("equal");
+  });
+  // All Clear [AC]
+  $("button[value='AC']").on("click", function(){
+    console.log("AC");
+  });
+  // Clear Entry [CE]
+  $("button[value='CE']").on("click", function(){
+    console.log("CE");
+  });
+
+
 });
