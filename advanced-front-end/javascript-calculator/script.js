@@ -1,6 +1,8 @@
+// Create
 // MODEL
 var operations = {
-  // It should have a way to addTwoNumbers
+  //////////// MATH OPERATIONS //////////
+  storage: [],
   add : function(a,b){
     return a+b;
   },
@@ -12,16 +14,28 @@ var operations = {
   },
   divide: function(a,b){
     return a/b;
+  },
+  //////////// CACLULATOR OPERATIONS //////////
+  equals: function(){
+
+  },
+  allClear: function(){
+  },
+  clearEntry: function(){
+  },
+  /////////// DISPLAY & RENDER //////////////////
+  render: function(){
+
   }
 }
 
+// Display, Read, Update, Destroy
 // VIEWS + CONTROLLER IN JQUERY
 $(document).ready(function(){
-
   //////////// MATH OPERATIONS //////////
   // Add
   $("button[value='+']").on("click", function(){
-    console.log("added");
+    console.log("add");
   });
   // Subtract
   $("button[value='-']").on("click", function(){
@@ -48,6 +62,14 @@ $(document).ready(function(){
   // Clear Entry [CE]
   $("button[value='CE']").on("click", function(){
     console.log("CE");
+  });
+  $("button[value='.']").on("click", function(){
+    console.log("I'm a dot");
+  })
+
+  //////////// EVERY NUMBER BUTTON //////////
+  $(".num").on("click", function(){
+    console.log("Im a number");
   });
 
 
