@@ -2,6 +2,7 @@
 // MODEL
 var operations = {
   //////////// MATH OPERATIONS //////////
+  cache: '', // appended into concatenated values
   storage: [],
   add : function(a,b){
     return a+b;
@@ -20,6 +21,8 @@ var operations = {
 
   },
   allClear: function(){
+    // It should clear cache to 0 and reset
+    this.cache = "0";
   },
   clearEntry: function(){
   },
@@ -49,7 +52,14 @@ $(document).ready(function(){
       case '7':
       case '8':
       case '9':
-        console.log('Num ' + buttonValue);
+        // It should have a way to store a stream of numbers temporarily until pushed as a string.
+        // It should only have 1 "." at most like decimal numbers, e.g. check if string has "." character
+
+        // Allow only 1 "."
+        // By testing if "." is present already when "." button is pressed
+        if(!(buttonValue==="." && operations.cache.includes("."))){
+          operations.cache = operations.cache + buttonValue;
+        }
         break;
       // Operators
       case 'x':
