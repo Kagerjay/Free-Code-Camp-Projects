@@ -2,8 +2,9 @@
 // MODEL
 var operations = {
   //////////// MATH OPERATIONS //////////
-  cache: '', // appended into concatenated values
-  storage: [],
+  cache: '', // temp storage for one full float value
+  storage: [], // captures main operations before "=" is pressed.
+               // E.G ["1","+","2"] would result in 3.
   add : function(a,b){
     return a+b;
   },
@@ -22,13 +23,15 @@ var operations = {
   },
   allClear: function(){
     // It should clear cache to 0 and reset
-    this.cache = "0";
   },
   clearEntry: function(){
   },
   /////////// DISPLAY & RENDER //////////////////
   render: function(){
 
+  },
+  flushCache: function(){
+    this.cache = "";
   }
 }
 
@@ -59,6 +62,7 @@ $(document).ready(function(){
         // By testing if "." is present already when "." button is pressed
         if(!(buttonValue==="." && operations.cache.includes("."))){
           operations.cache = operations.cache + buttonValue;
+          console.log(operations.cache);
         }
         break;
       // Operators
@@ -67,6 +71,10 @@ $(document).ready(function(){
       case '-':
       case '+':
         console.log('Operator ' + buttonValue);
+        // It should push cache into storage when operator is pressed.
+        operations.storage.push(operations.cache);
+        operations.flushCache();
+        console.log(operations.storage);
         break;
       // Other Essentials
       case '=':
@@ -84,3 +92,10 @@ $(document).ready(function(){
     }
   });
 });
+
+// General Notes
+// The final storage array before "=" should resemble ["1", "+", "2"] and process into a func
+// 2+4x8 = 34 (PEMDAS)
+// but official freecodecamp solution
+// shows 2+4+8 = 48
+// https://codepen.io/freeCodeCamp/full/rLJZrA
