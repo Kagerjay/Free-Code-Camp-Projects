@@ -17,29 +17,6 @@ var operations = {
   divide: function(a,b){
     return a/b;
   },
-  //////////// CACLULATOR OPERATIONS //////////
-  equals: function(){
-
-  },
-  allClear: function(){
-    // It should clear cache to 0 and reset
-  },
-  clearEntry: function(){
-  },
-  /////////// DISPLAY & RENDER //////////////////
-  render: function(){
-
-  },
-  ////////// FLUSH //////////////
-  flushCache: function(){
-    this.cache=0;
-  },
-  flushStorage: function(){
-    this.storage=[];
-  },
-  flushEntry: function(){
-    this.storage.pop();
-  },
   displayEntry: function(){
     // It should display previous array operators and numbers
     let previousEntries = this.storage.join(" ");
@@ -49,21 +26,38 @@ var operations = {
     } else {
       $('#entry').html(previousEntries + " " + this.cache);
     }
+    console.log(this.storage);
+    console.log(this.cache);
   },
   pushNumbers: function(buttonValue){
-    // It should have a way to store a stream of numbers temporarily until pushed as a string.
-    // It should only have 1 "." at most like decimal numbers, e.g. check if string has "." character
-
     // Ignore First 0 on CE or AC
     if(this.cache === 0){
       this.cache = "";
     }
-    // Allow only 1 "."
-    // By testing if "." is present already when "." button is pressed
+    // Allow only 1 "." by testing if its present already on button press
     if(!(buttonValue==="." && this.cache.includes("."))){
       this.cache = this.cache + buttonValue;
-      console.log(operations.cache);
     }
+  },
+  doOperations: function(buttonValue){
+    this.storage.push(this.cache);
+    this.storage.push(buttonValue); // push operator
+    this.cache="";
+  },
+  doClearing: function(buttonValue){
+    // If storage.length = 1, pressing "AC" and "CE" is same thing.
+    if(buttonValue == "AC" || this.storage.length===1){
+      this.cache="";
+      this.storage=[];
+      this.cache = 0; // The only time this is 0 is when AC is reset
+    } else if(buttonValue == "CE"){
+      this.storage.pop();
+    } else {
+      console.error("This shouldn't be runned!");
+    }
+  },
+  doEquals: function(){
+    // PEMDAS
   }
 }
 
@@ -94,22 +88,17 @@ $(document).ready(function(){
       case '÷':
       case '-':
       case '+':
-        operations.storage.push(operations.cache);
-        operations.storage.push(buttonValue); // push operator
-        operations.flushCache();
+        operations.doOperations(buttonValue);
         break;
       // Other Essentials
-      case '=':
-        break;
       case 'AC':
-        operations.flushCache();
-        operations.flushStorage();
-        break;
       case 'CE':
-        operations.flushEntry();
+        operations.doClearing(buttonValue);
         break;
+      case '=':
+        operations.doEquals();
       default:
-        console.log('ERROR');
+        console.log('ERROR DEFAULT CASE SHOULD NOT RUN!');
         break;
     }
     operations.displayEntry();
