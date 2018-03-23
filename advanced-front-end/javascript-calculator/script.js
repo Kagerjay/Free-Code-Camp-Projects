@@ -30,8 +30,40 @@ var operations = {
   render: function(){
 
   },
+  ////////// FLUSH //////////////
   flushCache: function(){
-    this.cache = "";
+    this.cache=0;
+  },
+  flushStorage: function(){
+    this.storage=[];
+  },
+  flushEntry: function(){
+    this.storage.pop();
+  },
+  displayEntry: function(){
+    // It should display previous array operators and numbers
+    let previousEntries = this.storage.join(" ");
+
+    if(this.storage.length ===0){
+      $('#entry').html(this.cache);
+    } else {
+      $('#entry').html(previousEntries + " " + this.cache);
+    }
+  },
+  pushNumbers: function(buttonValue){
+    // It should have a way to store a stream of numbers temporarily until pushed as a string.
+    // It should only have 1 "." at most like decimal numbers, e.g. check if string has "." character
+
+    // Ignore First 0 on CE or AC
+    if(this.cache === 0){
+      this.cache = "";
+    }
+    // Allow only 1 "."
+    // By testing if "." is present already when "." button is pressed
+    if(!(buttonValue==="." && this.cache.includes("."))){
+      this.cache = this.cache + buttonValue;
+      console.log(operations.cache);
+    }
   }
 }
 
@@ -55,41 +87,32 @@ $(document).ready(function(){
       case '7':
       case '8':
       case '9':
-        // It should have a way to store a stream of numbers temporarily until pushed as a string.
-        // It should only have 1 "." at most like decimal numbers, e.g. check if string has "." character
-
-        // Allow only 1 "."
-        // By testing if "." is present already when "." button is pressed
-        if(!(buttonValue==="." && operations.cache.includes("."))){
-          operations.cache = operations.cache + buttonValue;
-          console.log(operations.cache);
-        }
+        operations.pushNumbers(buttonValue);
         break;
       // Operators
       case 'x':
       case '÷':
       case '-':
       case '+':
-        console.log('Operator ' + buttonValue);
-        // It should push cache into storage when operator is pressed.
         operations.storage.push(operations.cache);
+        operations.storage.push(buttonValue); // push operator
         operations.flushCache();
-        console.log(operations.storage);
         break;
       // Other Essentials
       case '=':
-        console.log('Essential' + buttonValue);
         break;
       case 'AC':
-        console.log('Essential' + buttonValue);
+        operations.flushCache();
+        operations.flushStorage();
         break;
       case 'CE':
-        console.log('Essential' + buttonValue);
+        operations.flushEntry();
         break;
       default:
         console.log('ERROR');
         break;
     }
+    operations.displayEntry();
   });
 });
 
