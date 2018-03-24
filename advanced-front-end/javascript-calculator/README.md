@@ -33,7 +33,7 @@ Work on one CRUD element at any given time.
 
 # NOTES LEARNED DURING THIS PROGRAM
 
-### Lesson 1
+### PROBLEM & SOLUTION 1
 
 When checking if the lastest storage value was an operator, I tried using a regex.test function to evaluate things to true or false. This part of the program
 is the logic that handles when a "+%x-" operator key is pressed, it would append the cache to storage, and flush the cache after.
@@ -68,3 +68,61 @@ doOperations: function(buttonValue){
 result
 
 ![](https://i.imgur.com/ynJhyWQ.gif)
+
+### PROBLEM 2
+
+![](https://i.imgur.com/nRGhzRb.png)
+
+Getting some readout errors on code, not sure why
+
+![](https://i.imgur.com/AF2XXfO.png)
+
+I get why now
+
+On This
+
+```
+while(indexOfX > 0 && numberOfTimesRunned < 5){
+  // debugger;
+  let number1 = this.storage.splice(indexOfX-1,1);
+  let number2 = this.storage.splice(indexOfX+1,1);
+```
+
+I am splicing the array, so the index changes on the next splice.
+Use slice instead and splice and remove after.
+
+Figured out what's wrong again. My lack of knowledge on SPLICE vs SLICE.
+
+[1,2,3].slice(2,3) // [3]
+[1,2,3].splice(2,1) // [3]
+
+resulting demo code
+```
+let number1 = this.storage.slice(indexOfX-1, indexOfX);
+let number2 = this.storage.slice(indexOfX+1, indexOfX+2);
+```
+
+results preliminary
+
+![](https://i.imgur.com/T3Nk8Qn.png)
+
+I'm getting more errors.
+
+This has something to do with IndexOf working on a blank array.
+
+IndexOfX it looks like is always staying at a value of 1, hence infinite loop, must have been set to a primitive, not an object.
+
+```javascript
+let indexOfX = this.storage.indexOf('x'); // POINTER TO PRIMITIVE VALUE NOT OBJECT
+let numberOfTimesRunned = 0;
+// infinite loop issues
+while(indexOfX > 0 && numberOfTimesRunned < 5){
+  // code
+}
+```
+
+  ```
+
+  ```
+
+![](https://i.imgur.com/vaz75ia.png)

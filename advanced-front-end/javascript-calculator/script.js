@@ -5,18 +5,6 @@ var operations = {
   cache: '', // temp storage for one full float value
   storage: [], // captures main operations before "=" is pressed.
                // E.G ["1","+","2"] would result in 3.
-  add : function(a,b){
-    return a+b;
-  },
-  subtract : function(a,b) {
-    return a-b;
-  },
-  multiply: function(a,b){
-    return a*b;
-  },
-  divide: function(a,b){
-    return a/b;
-  },
   displayEntry: function(){
     // It should display previous array operators and numbers
     let previousEntries = this.storage.join(" ");
@@ -27,10 +15,18 @@ var operations = {
     } else {
       $('#entry').html(previousEntries + " " + this.cache);
     }
+    // Display cache
+    $("#output").html(this.cache);
+
+    // Display Value
     console.log(this.storage);
     console.log(this.cache);
   },
   pushNumbers: function(buttonValue){
+    // Clears operators
+    if(this.cache === "x" || this.cache === "÷" || this.cache === "-" || this.cache === "+"){
+      this.cache ="";
+    }
     // Ignore First 0 on CE or AC
     if(this.cache === 0){
       this.cache = "";
@@ -41,10 +37,11 @@ var operations = {
     }
   },
   doOperations: function(buttonValue){
+    // Clear Operators
     if(this.cache.length !== 0){
       this.storage.push(this.cache);
       this.storage.push(buttonValue); // push operator
-      this.cache="";
+      this.cache=buttonValue;
     }
   },
   doClearing: function(buttonValue){
@@ -61,6 +58,40 @@ var operations = {
   },
   doEquals: function(){
     // PEMDAS
+    // ['1','+','1', 'x', '2']   starting point
+    // ['1', '+', 'newNumber'] next point
+    // newNumber  → end point
+    this.storage.push(this.cache);
+    this.cache="";
+    let s = this.storage;
+    let calculation = 0;
+
+    let numberOfTimesRunned = 0;
+    while(this.storage.indexOf('x') > 0){
+      let indexOfX = this.storage.indexOf('x');
+      let number1 = this.storage.slice(indexOfX-1, indexOfX);
+      let number2 = this.storage.slice(indexOfX+1, indexOfX+2);
+      calculation = number1*number2;
+      this.storage.splice(indexOfX-1,3);
+      console.log(calculation);
+    }
+
+    // Seek Division
+  }
+}
+
+var utils = {
+  addAdjacent : function(index){
+    return a+b;
+  },
+  subtractAdjacent : function(a,b) {
+    return a-b;
+  },
+  multiplyAdjacent: function(a,b){
+    return a*b;
+  },
+  divideAdjacent: function(a,b){
+    return a/b;
   }
 }
 
