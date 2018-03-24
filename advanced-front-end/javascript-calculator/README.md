@@ -42,24 +42,28 @@ What happened was that it disallowed all future operators being added.
 
 The code was:
 
-  doOperations: function(buttonValue){
-    let lastArrayValue = this.storage[this.storage.length - 1];
-    let re = /^(\+|x|÷|-)$/;
-  if(!lastArrayValue.match(/^(\+|x|÷|-)$/)){
+```javascript
+doOperations: function(buttonValue){
+  let lastArrayValue = this.storage[this.storage.length - 1];
+  let re = /^(\+|x|÷|-)$/;
+if(!lastArrayValue.match(/^(\+|x|÷|-)$/)){
+  this.storage.push(this.cache);
+  this.storage.push(buttonValue); // push operator
+  this.cache="";
+}
+```
+
+It was rewritten as
+
+```javascript
+doOperations: function(buttonValue){
+  if(this.cache.length !== 0){
     this.storage.push(this.cache);
     this.storage.push(buttonValue); // push operator
     this.cache="";
   }
-
-It was rewritten as
-
-  doOperations: function(buttonValue){
-    if(this.cache.length !== 0){
-      this.storage.push(this.cache);
-      this.storage.push(buttonValue); // push operator
-      this.cache="";
-    }
-  },
+},
+```
 
 result
 
