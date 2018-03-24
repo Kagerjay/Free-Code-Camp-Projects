@@ -21,6 +21,7 @@ var operations = {
     // It should display previous array operators and numbers
     let previousEntries = this.storage.join(" ");
 
+    // Display current string + previously entered values
     if(this.storage.length ===0){
       $('#entry').html(this.cache);
     } else {
@@ -40,9 +41,11 @@ var operations = {
     }
   },
   doOperations: function(buttonValue){
-    this.storage.push(this.cache);
-    this.storage.push(buttonValue); // push operator
-    this.cache="";
+    if(this.cache.length !== 0){
+      this.storage.push(this.cache);
+      this.storage.push(buttonValue); // push operator
+      this.cache="";
+    }
   },
   doClearing: function(buttonValue){
     // If storage.length = 1, pressing "AC" and "CE" is same thing.
@@ -97,6 +100,7 @@ $(document).ready(function(){
         break;
       case '=':
         operations.doEquals();
+        break;
       default:
         console.log('ERROR DEFAULT CASE SHOULD NOT RUN!');
         break;
