@@ -1,98 +1,89 @@
 // Create
 // MODEL
-var operations = {
-  //////////// MATH OPERATIONS //////////
-  cache: '', // temp storage for one full float value
-  storage: [], // captures main operations before "=" is pressed.
-               // E.G ["1","+","2"] would result in 3.
+var model = {
+  cache: '', // current entered data
+  storage:'', // current total displayed sequence
   displayEntry: function(){
-    // It should display previous array operators and numbers
-    let previousEntries = this.storage.join(" ");
+    $('#entry').html(this.storage);
+    $('#output').html(this.cache);
+    console.log('this storage' , this.storage);
+    console.log('this cache', this.cache);
+  },
+  pushValues: function(buttonValue){
+    // Ignore "0" display value
+    if (this.cache   == 0){ this.cache = ''};
+    if (this.storage == 0){ this.storage = ''};
 
-    // Display current string + previously entered values
-    if(this.storage.length ===0){
-      $('#entry').html(this.cache);
-    } else {
-      $('#entry').html(previousEntries + " " + this.cache);
-    }
-    // Display cache
-    $("#output").html(this.cache);
+    const lastStorageChar = this.storage.slice(-1);
+    const lastStorageCharIsOperator = (lastStorageChar == "+" || lastStorageChar == "÷" || lastStorageChar == "x" || lastStorageChar == "-");
+    const lastStorageCharIs_NOT_Operator = !lastStorageCharIsOperator;
+    const buttonValueIsOperator = (buttonValue == "+" || buttonValue == "÷" || buttonValue == "x" || buttonValue == "-");
+    const isNumberOrFirstDot = !(buttonValue==="." && this.cache.includes(".")); // Disallow multiple "."
 
-    // Display Value
-    console.log(this.storage);
-    console.log(this.cache);
-  },
-  pushNumbers: function(buttonValue){
-    // Clears operators
-    if(this.cache === "x" || this.cache === "÷" || this.cache === "-" || this.cache === "+"){
-      this.cache ="";
-    }
-    // Ignore First 0 on CE or AC
-    if(this.cache === 0){
-      this.cache = "";
-    }
-    // Allow only 1 "." by testing if its present already on button press
-    if(!(buttonValue==="." && this.cache.includes("."))){
-      this.cache = this.cache + buttonValue;
-    }
-  },
-  doOperations: function(buttonValue){
-    // Clear Operators
-    if(this.cache.length !== 0){
-      this.storage.push(this.cache);
-      this.storage.push(buttonValue); // push operator
-      this.cache=buttonValue;
+    if (buttonValueIsOperator){
+      if (lastStorageCharIs_NOT_Operator && this.cache !==''){ // Unique operator
+        this.cache = buttonValue;
+        this.storage = this.storage + buttonValue;
+      } else if(lastStorageCharIsOperator){
+        // do nothing
+      } else {// Operator was pressed after "AC" or at start, so BACKTRACK
+        this.cache = 0;
+        this.storage = 0;
+      }
+    } else { // buttonValueIs_NOT_Operator
+      if(lastStorageCharIsOperator){
+        this.cache = ""; // Set to "" because below code will append data
+      }
+      if(isNumberOrFirstDot){
+        this.cache = this.cache + buttonValue;
+        this.storage = this.storage + buttonValue;
+      }
     }
   },
-  doClearing: function(buttonValue){
-    // If storage.length = 1, pressing "AC" and "CE" is same thing.
-    if(buttonValue == "AC" || this.storage.length===1){
-      this.cache="";
-      this.storage=[];
-      this.cache = 0; // The only time this is 0 is when AC is reset
-    } else if(buttonValue == "CE"){
-      this.storage.pop();
-    } else {
-      console.error("This shouldn't be runned!");
-    }
-  },
-  doEquals: function(){
-    // PEMDAS
-    // ['1','+','1', 'x', '2']   starting point
-    // ['1', '+', 'newNumber'] next point
-    // newNumber  → end point
-    this.storage.push(this.cache);
-    this.cache="";
-    let s = this.storage;
-    let calculation = 0;
+  clearEntry: function(){
+    // https://stackoverflow.com/questions/11134004/regex-that-will-match-the-last-occurrence-of-dot-in-a-string/
+    // targets last operator +÷x- and its' remaining string .......replaces it with nothing
+    // 1. (\+|÷|x|-)     Seek Operators.
+    // 2. (?=            Conditional check....
+    // 3. [^(\+|÷|x|\-)] For any other operators until end.
+    // 4. *$)(.*)/       Grab everything after
+    const selectLastEntry = /(\+|÷|x|-)(?=[^(\+|÷|x|\-)]*$)(.*)/;
+    const lastStorageChar = this.storage.slice(-1);
+    const lastStorageCharIsOperator = (lastStorageChar == "+" || lastStorageChar == "÷" || lastStorageChar == "x" || lastStorageChar == "-");
+    const isAllNumbers = (this.storage.matches("^[0-9]*$") && this.storage.length() > 2);
 
-    let numberOfTimesRunned = 0;
-    while(this.storage.indexOf('x') > 0){
-      let indexOfX = this.storage.indexOf('x');
-      let number1 = this.storage.slice(indexOfX-1, indexOfX);
-      let number2 = this.storage.slice(indexOfX+1, indexOfX+2);
-      calculation = number1*number2;
-      this.storage.splice(indexOfX-1,3);
-      console.log(calculation);
+    if(lastStorageCharIsOperator){
+      // Delete the last operator because writing a regex to accomodate that is complicated.
+      this.storage = this.storage.slice(0,-1);
     }
-
-    // Seek Division
-  }
-}
-
-var utils = {
-  addAdjacent : function(index){
-    return a+b;
+    if(isAllNumbers){
+      this.storage = 0;
+    }
+    this.storage = this.storage.replace(selectLastEntry, '$1'); // $1 is +÷x-
+    this.cache = 0;
   },
-  subtractAdjacent : function(a,b) {
-    return a-b;
+  clearAll: function(){
+    this.cache =   0;
+    this.storage = 0;
   },
-  multiplyAdjacent: function(a,b){
-    return a*b;
-  },
-  divideAdjacent: function(a,b){
-    return a/b;
-  }
+  // calculate: function(){
+  //   this.storage.push(this.cache);
+  //   this.cache="";
+  //   let s = this.storage;
+  //   let calculation = 0;
+  //
+  //   let numberOfTimesRunned = 0;
+  //   while(this.storage.indexOf('x') > 0){
+  //     let indexOfX = this.storage.indexOf('x');
+  //     let number1 = this.storage.slice(indexOfX-1, indexOfX);
+  //     let number2 = this.storage.slice(indexOfX+1, indexOfX+2);
+  //     calculation = number1*number2;
+  //     this.storage.splice(indexOfX-1,3);
+  //     console.log(calculation);
+  //   }
+  //
+  //   // Seek Division
+  // }
 }
 
 // Display, Read, Update, Destroy
@@ -115,28 +106,26 @@ $(document).ready(function(){
       case '7':
       case '8':
       case '9':
-        operations.pushNumbers(buttonValue);
-        break;
-      // Operators
       case 'x':
       case '÷':
       case '-':
       case '+':
-        operations.doOperations(buttonValue);
+        model.pushValues(buttonValue);
         break;
-      // Other Essentials
       case 'AC':
+        model.clearAll();
+        break;
       case 'CE':
-        operations.doClearing(buttonValue);
+        model.clearEntry();
         break;
       case '=':
-        operations.doEquals();
+        model.calculate();
         break;
       default:
         console.log('ERROR DEFAULT CASE SHOULD NOT RUN!');
         break;
     }
-    operations.displayEntry();
+    model.displayEntry();
   });
 });
 
