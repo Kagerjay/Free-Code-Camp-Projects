@@ -136,3 +136,11 @@ I see that I need to have a library of definitions, code is getting utterly slop
 ![](https://i.imgur.com/Psu71jp.png)
 
 Stackoverflow is giving poor solutions on searches, going to have to use NPM libraries for ideas (such as is-number) and start writing my own variants of "micro-code" function libraries, similar to sindreahus or https://www.npmjs.com/~jonschlinkert.
+
+## PROBLEM 4 - Calculate method, making string input to something useful
+
+I have this set of values
+
+"99999x999+99/999" in string format. Originally, I had it processed via an array... but displaying it was too much work, strings were easier.
+
+Now I need to go to something like ['99999', 'x', '999', '+', '99', '/', '999']. Can't think of anyway to do this except another sloppy implementation / horribly optimized loop through every value in string, and make the array.
