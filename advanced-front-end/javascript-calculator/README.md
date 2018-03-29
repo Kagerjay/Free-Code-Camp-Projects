@@ -126,3 +126,13 @@ while(indexOfX > 0 && numberOfTimesRunned < 5){
   ```
 
 ![](https://i.imgur.com/vaz75ia.png)
+
+
+## PROBLEM 3 - Sloppy code hard to read
+3/28/18
+
+I see that I need to have a library of definitions, code is getting utterly sloppy, its just as bad as writing eventListeners natively or using PUG / preprocessor and having to extrapolate what I wrote by looking at code elsewhere.
+
+![](https://i.imgur.com/Psu71jp.png)
+
+Stackoverflow is giving poor solutions on searches, going to have to use NPM libraries for ideas (such as is-number) and start writing my own variants of "micro-code" function libraries, similar to sindreahus or https://www.npmjs.com/~jonschlinkert.

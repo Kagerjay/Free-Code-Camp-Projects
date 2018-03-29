@@ -41,6 +41,11 @@ var model = {
     }
   },
   clearEntry: function(){
+
+    if(this.storage == 0){
+      return; // exit clearEntry
+    }
+
     // https://stackoverflow.com/questions/11134004/regex-that-will-match-the-last-occurrence-of-dot-in-a-string/
     // targets last operator +÷x- and its' remaining string .......replaces it with nothing
     // 1. (\+|÷|x|-)     Seek Operators.
@@ -48,19 +53,21 @@ var model = {
     // 3. [^(\+|÷|x|\-)] For any other operators until end.
     // 4. *$)(.*)/       Grab everything after
     const selectLastEntry = /(\+|÷|x|-)(?=[^(\+|÷|x|\-)]*$)(.*)/;
+    const hasOperator = (this.storage.includes('+') || this.storage.includes("÷") || this.storage.includes('x') || this.storage.includes('-'));
     const lastStorageChar = this.storage.slice(-1);
     const lastStorageCharIsOperator = (lastStorageChar == "+" || lastStorageChar == "÷" || lastStorageChar == "x" || lastStorageChar == "-");
-    const isAllNumbers = (this.storage.matches("^[0-9]*$") && this.storage.length() > 2);
 
     if(lastStorageCharIsOperator){
-      // Delete the last operator because writing a regex to accomodate that is complicated.
       this.storage = this.storage.slice(0,-1);
     }
-    if(isAllNumbers){
+    if(hasOperator){
+      this.storage = this.storage.replace(selectLastEntry, '$1'); // $1 is +÷x-
+    } else {
       this.storage = 0;
     }
-    this.storage = this.storage.replace(selectLastEntry, '$1'); // $1 is +÷x-
+
     this.cache = 0;
+
   },
   clearAll: function(){
     this.cache =   0;
@@ -84,6 +91,12 @@ var model = {
   //
   //   // Seek Division
   // }
+}
+
+var util = {
+  isOperator: function(value){
+    console.log(value);
+  },
 }
 
 // Display, Read, Update, Destroy
