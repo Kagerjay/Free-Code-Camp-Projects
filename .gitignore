@@ -1,1 +1,11 @@
 /node_modules
+
+# DUMPSTER CODE
+# Dump.html is code I'd normally throw out, and its comments before a commit
+# Sandbox.html is a small testing environment to isolate some clean code
+/*/*/dump.html
+/*/*/sandbox.html
+/*/dump.html
+/*/sandbox.html
+/dump.html
+/sandbox.html
