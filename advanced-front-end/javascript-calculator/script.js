@@ -73,30 +73,46 @@ var model = {
     this.cache =   0;
     this.storage = 0;
   },
-  // calculate: function(){
-  //   this.storage.push(this.cache);
-  //   this.cache="";
-  //   let s = this.storage;
-  //   let calculation = 0;
-  //
-  //   let numberOfTimesRunned = 0;
-  //   while(this.storage.indexOf('x') > 0){
-  //     let indexOfX = this.storage.indexOf('x');
-  //     let number1 = this.storage.slice(indexOfX-1, indexOfX);
-  //     let number2 = this.storage.slice(indexOfX+1, indexOfX+2);
-  //     calculation = number1*number2;
-  //     this.storage.splice(indexOfX-1,3);
-  //     console.log(calculation);
-  //   }
-  //
-  //   // Seek Division
-  // }
+  calculate: function(){
+    // https://stackoverflow.com/questions/4437916/how-to-convert-all-elements-in-an-array-to-integer-in-javascript
+    // https://stackoverflow.com/questions/49546448/javascript-split-a-string-into-array-matching-parameters
+    // '12+345x6/789'   to  [12, +, 345, x, 6, /, 789]
+    debugger;
+    let tempArr = this.storage.match(/\d+|[\+-÷x]/g);
+    let orderOper = ["x","÷","+","-"]; // PEMDAS
+    while (tempArr.length > 1){
+      orderOper.forEach(function(operator){
+        while(tempArr.indexOf(operator) > 0){
+          util.calculatePartials(operator,tempArr);
+        }
+      });
+    }
+    this.cache = tempArr.toString();
+  },
 }
 
 var util = {
   isOperator: function(value){
     console.log(value);
   },
+  calculatePartials: function(operator, tempArr){
+    let removedArr = tempArr.splice(tempArr.indexOf(operator)-1,3);
+    let firstNum = parseInt(removedArr[0]);
+    let secondNum = parseInt(removedArr[2]);
+    let calcRes = operations[operator](firstNum, secondNum);
+    tempArr.splice(tempArr.indexOf(operator)-1, 0, calcRes); // push back old result in
+    return tempArr;
+  }
+
+}
+
+// https://stackoverflow.com/questions/5834318/are-variable-operators-possible
+// Math library
+var operations = {
+  'x': function(a,b) { return a*b},
+  '÷': function(a,b) { return a/b},
+  '+': function(a,b) { return a+b},
+  '-': function(a,b) { return a-b},
 }
 
 // Display, Read, Update, Destroy
