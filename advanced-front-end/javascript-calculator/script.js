@@ -96,11 +96,13 @@ var util = {
     console.log(value);
   },
   calculatePartials: function(operator, tempArr){
-    let removedArr = tempArr.splice(tempArr.indexOf(operator)-1,3);
-    let firstNum = parseInt(removedArr[0]);
-    let secondNum = parseInt(removedArr[2]);
-    let calcRes = operations[operator](firstNum, secondNum);
-    tempArr.splice(tempArr.indexOf(operator)-1, 0, calcRes); // push back old result in
+    const indexStart = tempArr.indexOf(operator)-1;
+    const removedArr = tempArr.splice(indexStart,3);
+    const firstNum = parseInt(removedArr[0]);
+    const secondNum = parseInt(removedArr[2]);
+    const calcRes = operations[operator](firstNum, secondNum);
+
+    tempArr.splice(indexStart, 0, calcRes); // push back old result in
     return tempArr;
   }
 
