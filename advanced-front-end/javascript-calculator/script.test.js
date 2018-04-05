@@ -10,7 +10,7 @@ var should = chai.should();
 
 // TESTS
 // Assertions
-describe("Calculate Partials Simple Tests", function(){
+describe("Util.calculatePartials Simple Tests", function(){
 	it("should have array of [9,+,9] return [18]", function(){
 		let a = util.calculatePartials("+", [9, "+", 9]);
 		assert.equal(a,18);
@@ -26,6 +26,17 @@ describe("Calculate Partials Simple Tests", function(){
 	it("should have array of [9,-,9] return [0]", function(){
 		let a = util.calculatePartials("-", [9,"-",9]);
 		assert.equal(a,0);
+	})
+})
+
+describe("Util.SplitNumAndOper Tests", function(){
+	it('should have "6+4+3" return [6,"+",4,"+",3]', function(){
+		let a = util.splitNumAndOper("6+4+3");
+		assert.deepEqual(a,[6,'+',4,'+',3]);
+	})
+	it('should have "6-4-3" return [6,"+",-4,"+",-3]', function(){
+		let a = util.splitNumAndOper("6-4-3");
+		assert.deepEqual(a,[6,'+',-4,'+',-3]);
 	})
 })
 

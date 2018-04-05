@@ -94,11 +94,7 @@ var model = {
     this.storage = 0;
   },
   calculate: function(){
-    // https://stackoverflow.com/questions/4437916/how-to-convert-all-elements-in-an-array-to-integer-in-javascript
-    // https://stackoverflow.com/questions/49546448/javascript-split-a-string-into-array-matching-parameters
-    // '12+345x6/789'   to  [12, +, 345, x, 6, /, 789]
-
-    let tempArr = this.storage.match(/\d+|[\+-÷x]/g);
+    let tempArr = util.splitNumAndOper(this.storage);
     let orderOper = ["x","÷","+","-"]; // PEMDAS
 
     // Disallow operators used before equal sign
@@ -121,6 +117,46 @@ var model = {
 var util = {
   isOperator: function(value){
     console.log(value);
+  },
+  splitNumAndOper: function(rawString){
+    // https://stackoverflow.com/questions/4437916/how-to-convert-all-elements-in-an-array-to-integer-in-javascript
+    // https://stackoverflow.com/questions/49546448/javascript-split-a-string-into-array-matching-parameters
+    // '12+345x6/789'   to  [12, +, 345, x, 6, /, 789]
+
+    let splitArray = rawString.match(/\d+|[\+-÷x]/g);
+    let assocPropArray = [];
+    let isPreviousOperatorMinusSign = false;
+    // First Convert Elements into actual Numbers
+    splitArray = splitArray.map(function(el){
+      if($.isNumeric(el)){
+        return parseInt(el);
+      } else {
+        return el;
+      }
+    });
+
+    if(splitArray.indexOf("-") > 0){
+      // If it has a minus sign, apply associative property
+      // [6,"-",4,"-",3] becomes [6,"+", -4, "+", -3]
+      // Map does not work here since it relies on previous values
+      splitArray = splitArray.map(function(el){
+        if(el=="-"){
+          el = "+";
+          isPreviousOperatorMinusSign = true;
+          return el;
+        } else if(isPreviousOperatorMinusSign){
+          el = parseInt(-el);
+          isPreviousOperatorMinusSign = false;
+          return el;
+        } else { //its a Number or a non(-) operator
+          return el;
+        }
+      });
+      return splitArray;
+    } else {
+      // else its doesn't have minus signs
+      return splitArray;
+    }
   },
   calculatePartials: function(operator, tempArr){
     const indexStart = tempArr.indexOf(operator)-1;
