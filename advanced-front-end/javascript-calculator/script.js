@@ -97,19 +97,24 @@ var model = {
     // https://stackoverflow.com/questions/4437916/how-to-convert-all-elements-in-an-array-to-integer-in-javascript
     // https://stackoverflow.com/questions/49546448/javascript-split-a-string-into-array-matching-parameters
     // '12+345x6/789'   to  [12, +, 345, x, 6, /, 789]
-    debugger;
+
     let tempArr = this.storage.match(/\d+|[\+-÷x]/g);
     let orderOper = ["x","÷","+","-"]; // PEMDAS
-    // TODO Try catch error block for catching infinite loops and unit testing
-    while (tempArr.length > 1){
-      orderOper.forEach(function(operator){
-        while(tempArr.indexOf(operator) > 0){
-          util.calculatePartials(operator,tempArr);
-        }
-      });
+
+    // Disallow operators used before equal sign
+    if($.isNumeric(this.storage.slice(-1))){
+      // TODO Try catch error block for catching infinite loops and unit testing
+      while (tempArr.length > 1){
+        orderOper.forEach(function(operator){
+          while(tempArr.indexOf(operator) > 0){
+            util.calculatePartials(operator,tempArr);
+          }
+        });
+      }
+      this.storage = this.storage + "=" + tempArr.toString();
+      this.cache = tempArr.toString();
     }
-    this.storage = this.storage + "=" + tempArr.toString();
-    this.cache = tempArr.toString();
+
   },
 }
 
