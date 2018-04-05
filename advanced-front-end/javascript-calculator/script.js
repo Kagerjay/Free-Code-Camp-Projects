@@ -10,18 +10,34 @@ var model = {
     console.log('this cache', this.cache);
   },
   pushValues: function(buttonValue){
-    // Ignore "0" display value
-    if (this.cache   == 0){ this.cache = ''};
-    if (this.storage == 0){ this.storage = ''};
 
-    const lastStorageChar = this.storage.slice(-1);
+    const lastStorageChar = this.storage.toString().slice(-1); // Can only slice strings not nums
     const lastStorageCharIsOperator = (lastStorageChar == "+" || lastStorageChar == "÷" || lastStorageChar == "x" || lastStorageChar == "-");
     const lastStorageCharIs_NOT_Operator = !lastStorageCharIsOperator;
     const buttonValueIsOperator = (buttonValue == "+" || buttonValue == "÷" || buttonValue == "x" || buttonValue == "-");
     const isNumberOrFirstDot = !(buttonValue==="." && this.cache.includes(".")); // Disallow multiple "."
 
+    // Ignore "0" display value
+    if (this.cache   == 0){ this.cache = ''};
+    if (this.storage == 0){ this.storage = ''};
+
+    // Continue using last calculated answer
+    // "72-9=63" becomes "63"
+    // if(buttonValueIsOperator && this.storage.indexOf("=") > 0){
+    //   this.cache = '';
+    //   this.storage = this.storage.split("=")[1];
+    // } else if (this.storage.indexOf("=") > 0) {
+    //   this.cache = '';
+    //   this.storage = '';
+    // } else {
+    //   // Nothing?
+    // }
+
     if (buttonValueIsOperator){
-      if (lastStorageCharIs_NOT_Operator && this.cache !==''){ // Unique operator
+      if (this.storage.indexOf("=") > 0) {
+        this.cache = buttonValue;
+        this.storage = this.storage.split("=")[1] + buttonValue;
+      } else if (lastStorageCharIs_NOT_Operator && this.cache !==''){ // Unique operator
         this.cache = buttonValue;
         this.storage = this.storage + buttonValue;
       } else if(lastStorageCharIsOperator){
@@ -31,6 +47,10 @@ var model = {
         this.storage = 0;
       }
     } else { // buttonValueIs_NOT_Operator
+      if(this.storage.indexOf("=") > 0){
+        this.cache ='';
+        this.storage ='';
+      }
       if(lastStorageCharIsOperator){
         this.cache = ""; // Set to "" because below code will append data
       }
@@ -80,6 +100,7 @@ var model = {
     debugger;
     let tempArr = this.storage.match(/\d+|[\+-÷x]/g);
     let orderOper = ["x","÷","+","-"]; // PEMDAS
+    // TODO Try catch error block for catching infinite loops and unit testing
     while (tempArr.length > 1){
       orderOper.forEach(function(operator){
         while(tempArr.indexOf(operator) > 0){
@@ -87,6 +108,7 @@ var model = {
         }
       });
     }
+    this.storage = this.storage + "=" + tempArr.toString();
     this.cache = tempArr.toString();
   },
 }
