@@ -17,24 +17,23 @@ var model = {
     const buttonValueIsOperator = (buttonValue == "+" || buttonValue == "÷" || buttonValue == "x" || buttonValue == "-");
     const isNumberOrFirstDot = !(buttonValue==="." && this.cache.includes(".")); // Disallow multiple "."
 
+    if(util.exceedDisplay(this.cache)){
+      this.storage = "Digit Limit Met";
+      this.cache = 0;
+      return;
+    }
+
     // Ignore "0" display value
+    if (this.storage == "Digit Limit Met" && !buttonValueIsOperator){ this.storage = ''};
     if (this.cache   == 0){ this.cache = ''};
     if (this.storage == 0){ this.storage = ''};
 
-    // Continue using last calculated answer
-    // "72-9=63" becomes "63"
-    // if(buttonValueIsOperator && this.storage.indexOf("=") > 0){
-    //   this.cache = '';
-    //   this.storage = this.storage.split("=")[1];
-    // } else if (this.storage.indexOf("=") > 0) {
-    //   this.cache = '';
-    //   this.storage = '';
-    // } else {
-    //   // Nothing?
-    // }
 
     if (buttonValueIsOperator){
-      if (this.storage.indexOf("=") > 0) {
+      if(this.storage == "Digit Limit Met"){
+        this.cache = 0;
+        // nothing;
+      } else if (this.storage.indexOf("=") > 0) {
         this.cache = buttonValue;
         this.storage = this.storage.split("=")[1] + buttonValue;
       } else if (lastStorageCharIs_NOT_Operator && this.cache !==''){ // Unique operator
@@ -107,8 +106,13 @@ var model = {
           }
         });
       }
-      this.storage = this.storage + "=" + tempArr.toString();
-      this.cache = tempArr.toString();
+      if(util.exceedDisplay(tempArr.toString())) {
+        this.storage = "Digit Limit Met";
+        this.cache = 0;
+      } else {
+        this.storage = this.storage + "=" + tempArr.toString();
+        this.cache = tempArr.toString();
+      }
     }
 
   },
@@ -167,6 +171,9 @@ var util = {
 
     tempArr.splice(indexStart, 0, calcRes); // push back old result in
     return tempArr;
+  },
+  exceedDisplay: function(rawString){
+    return (rawString.length > 9) ? true : false;
   }
 
 }
