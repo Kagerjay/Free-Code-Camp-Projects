@@ -1,127 +1,4 @@
-// Create
-// MODEL
-var model = {
-  cache: '', // current entered data
-  storage:'', // current total displayed sequence
-  displayEntry: function(){
-    $('#entry').html(this.storage);
-    $('#output').html(this.cache);
-    console.log('this storage' , this.storage);
-    console.log('this cache', this.cache);
-  },
-  pushValues: function(buttonValue){
-
-    const lastStorageChar = this.storage.toString().slice(-1); // Can only slice strings not nums
-    const lastStorageCharIsOperator = (lastStorageChar == "+" || lastStorageChar == "÷" || lastStorageChar == "x" || lastStorageChar == "-");
-    const lastStorageCharIs_NOT_Operator = !lastStorageCharIsOperator;
-    const buttonValueIsOperator = (buttonValue == "+" || buttonValue == "÷" || buttonValue == "x" || buttonValue == "-");
-    const isNumberOrFirstDot = !(buttonValue==="." && this.cache.includes(".")); // Disallow multiple "."
-
-    if(util.exceedDisplay(this.cache)){
-      this.storage = "Digit Limit Met";
-      this.cache = 0;
-      return;
-    }
-
-    // Ignore "0" display value
-    if (this.storage == "Digit Limit Met" && !buttonValueIsOperator){ this.storage = ''};
-    if (this.cache   == 0){ this.cache = ''};
-    if (this.storage == 0){ this.storage = ''};
-
-
-    if (buttonValueIsOperator){
-      if(this.storage == "Digit Limit Met"){
-        this.cache = 0;
-        // nothing;
-      } else if (this.storage.indexOf("=") > 0) {
-        this.cache = buttonValue;
-        this.storage = this.storage.split("=")[1] + buttonValue;
-      } else if (lastStorageCharIs_NOT_Operator && this.cache !==''){ // Unique operator
-        this.cache = buttonValue;
-        this.storage = this.storage + buttonValue;
-      } else if(lastStorageCharIsOperator){
-        // do nothing
-      } else {// Operator was pressed after "AC" or at start, so BACKTRACK
-        this.cache = 0;
-        this.storage = 0;
-      }
-    } else { // buttonValueIs_NOT_Operator
-      if(this.storage.indexOf("=") > 0){
-        this.cache ='';
-        this.storage ='';
-      }
-      if(lastStorageCharIsOperator){
-        this.cache = ""; // Set to "" because below code will append data
-      }
-      if(isNumberOrFirstDot){
-        this.cache = this.cache + buttonValue;
-        this.storage = this.storage + buttonValue;
-      }
-    }
-  },
-  clearEntry: function(){
-
-    if(this.storage == 0){
-      return; // exit clearEntry
-    }
-
-    // https://stackoverflow.com/questions/11134004/regex-that-will-match-the-last-occurrence-of-dot-in-a-string/
-    // targets last operator +÷x- and its' remaining string .......replaces it with nothing
-    // 1. (\+|÷|x|-)     Seek Operators.
-    // 2. (?=            Conditional check....
-    // 3. [^(\+|÷|x|\-)] For any other operators until end.
-    // 4. *$)(.*)/       Grab everything after
-    const selectLastEntry = /(\+|÷|x|-)(?=[^(\+|÷|x|\-)]*$)(.*)/;
-    const hasOperator = (this.storage.includes('+') || this.storage.includes("÷") || this.storage.includes('x') || this.storage.includes('-'));
-    const lastStorageChar = this.storage.slice(-1);
-    const lastStorageCharIsOperator = (lastStorageChar == "+" || lastStorageChar == "÷" || lastStorageChar == "x" || lastStorageChar == "-");
-
-    if(lastStorageCharIsOperator){
-      this.storage = this.storage.slice(0,-1);
-    }
-    if(hasOperator){
-      this.storage = this.storage.replace(selectLastEntry, '$1'); // $1 is +÷x-
-    } else {
-      this.storage = 0;
-    }
-
-    this.cache = 0;
-
-  },
-  clearAll: function(){
-    this.cache =   0;
-    this.storage = 0;
-  },
-  calculate: function(){
-    let tempArr = util.splitNumAndOper(this.storage);
-    let orderOper = ["x","÷","+","-"]; // PEMDAS
-
-    // Disallow operators used before equal sign
-    if($.isNumeric(this.storage.slice(-1))){
-      // TODO Try catch error block for catching infinite loops and unit testing
-      while (tempArr.length > 1){
-        orderOper.forEach(function(operator){
-          while(tempArr.indexOf(operator) > 0){
-            util.calculatePartials(operator,tempArr);
-          }
-        });
-      }
-      if(util.exceedDisplay(tempArr.toString())) {
-        this.storage = "Digit Limit Met";
-        this.cache = 0;
-      } else {
-        this.storage = this.storage + "=" + tempArr.toString();
-        this.cache = tempArr.toString();
-      }
-    }
-
-  },
-}
-
 var util = {
-  isOperator: function(value){
-    console.log(value);
-  },
   splitNumAndOper: function(rawString){
     // https://stackoverflow.com/questions/4437916/how-to-convert-all-elements-in-an-array-to-integer-in-javascript
     // https://stackoverflow.com/questions/49546448/javascript-split-a-string-into-array-matching-parameters
@@ -187,10 +64,30 @@ var operations = {
   '-': function(a,b) { return a-b},
 }
 
+var view = {
+  displayEntry: function(data){
+    $('#entry').html(data.storage);
+    $('#output').html(data.cache);
+    console.log('this storage' , data.storage);
+    console.log('this cache', data.cache);
+  }
+}
+
+var model = {
+  pushValue: function(buttonValue, obj){
+    data.storage = data.storage + buttonValue;
+    data.cache = data.cache + buttonValue;
+    return data;
+  }
+}
+
 // Display, Read, Update, Destroy
 // VIEWS + CONTROLLER IN JQUERY
 $(document).ready(function(){
-
+  let data = {
+    store: 0,
+    cache: 0
+  }
   // Condense down into one click button
   $("button").on("click", function(){
     let buttonValue = $(this).attr("value");
@@ -211,22 +108,22 @@ $(document).ready(function(){
       case '÷':
       case '-':
       case '+':
-        model.pushValues(buttonValue);
+        data = model.pushValue(buttonValue, data);
         break;
       case 'AC':
-        model.clearAll();
+        data = model.clearAll(data);
         break;
       case 'CE':
-        model.clearEntry();
+        data = model.clearEntry(data);
         break;
       case '=':
-        model.calculate();
+        data = model.calculate(data);
         break;
       default:
         console.log('ERROR DEFAULT CASE SHOULD NOT RUN!');
         break;
     }
-    model.displayEntry();
+    view.displayEntry(data);
   });
 });
 
