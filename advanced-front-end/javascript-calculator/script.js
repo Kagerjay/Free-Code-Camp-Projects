@@ -65,7 +65,7 @@ var operations = {
 }
 
 var view = {
-  displayEntry: function(data){
+  display: function(data){
     $('#entry').html(data.storage);
     $('#output').html(data.cache);
     console.log('this storage' , data.storage);
@@ -73,27 +73,73 @@ var view = {
   }
 }
 
+const re = /(-|\+|÷|x)/;
+
 var model = {
-  pushValue: function(buttonValue, obj){
-    data.storage = data.storage + buttonValue;
-    data.cache = data.cache + buttonValue;
-    return data;
+  pushDot: function(buttonValue, cache){
+    return (cache.includes("."))
+      ? cache : cache+buttonValue;
+  },
+  pushNumber: function(buttonValue, cache){
+    return cache+buttonValue;
+  },
+  pushOperator: function(buttonValue, cache){
+    return (cache == '' || re.test(cache.slice(-1)))
+      ? cache : cache+buttonValue;
+  },
+  clearAll: function(buttonValue, cache){
+    return '';
+  },
+  clearEntry: function(cache){
+    //https://stackoverflow.com/questions/11134004/regex-that-will-match-the-last-occurrence-of-dot-in-a-string/
+    // targets last operator +÷x- and its' remaining string .......replaces it with nothing
+    // 1. (\+|÷|x|-)     Seek Operators.
+    // 2. (?=            Conditional check....
+    // 3. [^(\+|÷|x|\-)] For any other operators until end.
+    // 4. *$)(.*)/       Grab everything after
+    const lastEntry = /(\+|÷|x|-)(?=[^(\+|÷|x|\-)]*$)(.*)/;
+
+    if(re.test(cache.slice(-1))){ // if lastchar is operator
+      cache = cache.slice(0,-1); // delete
+    } else if(re.test(cache)){ // If string has operator
+      cache = cache.replace(selectLastEntry, '$1'); // remove numbers ahead
+    } else { // no operators
+      cache = '';
+    }
+    return cache;
+  },
+  calculate: function(cache){
+    let tempArr = util.splitNumAndOper(cache);
+    let orderOper = ["x","÷","+","-"]; // PEMDAS
+
+    // TODO catch potential infinite loop errors
+    // Disallow operators used before equal sign
+    if($.isNumeric(this.storage.slice(-1))){
+      while (tempArr.length > 1){
+        orderOper.forEach(function(operator){
+          while(tempArr.indexOf(operator) > 0){
+            util.calculatePartials(operator,tempArr);
+          }
+        });
+      }
+      cache = cache + "=" + tempArr.toString();
+    }
+    return cache;
   }
 }
 
 // Display, Read, Update, Destroy
 // VIEWS + CONTROLLER IN JQUERY
 $(document).ready(function(){
-  let data = {
-    store: 0,
-    cache: 0
-  }
+  let cache = '';
   // Condense down into one click button
   $("button").on("click", function(){
     let buttonValue = $(this).attr("value");
     switch(buttonValue) {
       // Numbers
       case '.':
+        cache = model.pushDot(buttonValue, cache);
+        break;
       case '0':
       case '1':
       case '2':
@@ -104,26 +150,28 @@ $(document).ready(function(){
       case '7':
       case '8':
       case '9':
+        cache = model.pushNumber(buttonValue, cache);
+        break;
       case 'x':
       case '÷':
       case '-':
       case '+':
-        data = model.pushValue(buttonValue, data);
+        cache = model.pushOperator(buttonValue, cache);
         break;
       case 'AC':
-        data = model.clearAll(data);
+        cache = model.clearAll(cache);
         break;
       case 'CE':
-        data = model.clearEntry(data);
+        cache = model.clearEntry(cache);
         break;
       case '=':
-        data = model.calculate(data);
+        cache = model.calculate(cache);
         break;
       default:
         console.log('ERROR DEFAULT CASE SHOULD NOT RUN!');
         break;
     }
-    view.displayEntry(data);
+    view.display(cache);
   });
 });
 

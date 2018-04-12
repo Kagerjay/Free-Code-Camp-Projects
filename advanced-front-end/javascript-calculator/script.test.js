@@ -10,7 +10,7 @@ var should = chai.should();
 
 // TESTS
 // Assertions
-describe("Util.calculatePartials Simple Tests", function(){
+describe("util.calculatePartials", function(){
 	it("should have array of [9,+,9] return [18]", function(){
 		const a = util.calculatePartials("+", [9, "+", 9]);
 		assert.equal(a,18);
@@ -29,7 +29,7 @@ describe("Util.calculatePartials Simple Tests", function(){
 	})
 })
 
-describe("Util.SplitNumAndOper Tests", function(){
+describe("util.SplitNumAndOper", function(){
 	it('should have "6+4+3" return [6,"+",4,"+",3]', function(){
 		const a = util.splitNumAndOper("6+4+3");
 		assert.deepEqual(a,[6,'+',4,'+',3]);
@@ -40,44 +40,49 @@ describe("Util.SplitNumAndOper Tests", function(){
 	})
 })
 
-// GENERIC TESTS
-describe("Model.pushValues Generic Tests", function(){
-	// GENERIC TESTS UPTOP
-	const blank = {cache:'', storage:''};
-	const zeroed = {cache: 0, storage: 0};
-
-	it('should add a "."', () => {
-		let a = model.pushValue('.', blank);
-		let b = {cache:'.', storage:'.'}
-		a = {cache:'0.', storage:'0.'};
-		assert.equal(a,b);
+describe("model.pushDot", function(){
+	it('should allow only one "."', function(){
 	})
 })
 
-// EDGE TESTS
-describe("Model.pushValue Edge Tests", function(){
-	it('should disallow multiple "." operator', function(){
-		let a = {cache: '55.5', storage: '55.5'};
-		let b = model.pushValue('.',a);
-		assert.equal(a,b);
+describe("model.pushNumber", function(){
+	it("should push number as a string/char", function(){
 	})
+})
+
+describe("model.pushOperator", function(){
 	it('should disallow sequential operators', function(){
-		let a = {cache: '55', storage: '55x'};
-		let b = model.pushValue('55',a);
-		assert.equal(a,b);
 	})
 })
 
-describe("Model.clearEntry test", function(){
-
+describe("model.clearAll", function(){
+	it("should clear everything", function(){
+	})
 })
 
-describe("Model.clearAll test", function(){
-
+describe("model.clearEntry", function(){
+	it("should delete all if no operators found", function(){
+	})
+  it("should delete operator if last character", function(){
+	})
+	it("should delete number-string before an operator", function(){
+	})
 })
 
-describe("Model.calculate test", function(){
+describe("model.calculate", function(){
+	it("should do order of operations", function(){
+	})
+})
 
+describe("view.display", function(){
+	it('should throw "Digit Limit Met" if lastNumSeq > 9 chars', function(){
+	})
+	it('should throw "Digit Limit Met" if calculation > 9 chars', function(){
+	})
+	it('should throw "Digit Limit Met" if cache > 26 char', function(){
+	})
+	it('should show 0 if cache is blank', function(){
+	})
 })
 
 // RUN MOCHA
