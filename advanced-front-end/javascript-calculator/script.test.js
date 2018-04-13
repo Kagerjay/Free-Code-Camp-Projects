@@ -42,35 +42,68 @@ describe("util.SplitNumAndOper", function(){
 
 describe("model.pushDot", function(){
 	it('should allow only one "."', function(){
+		const a = model.pushDot("9.99");
+		assert.equal(a,"9.99");
+	})
+	it('should add . if none present', function(){
+		const a = model.pushDot("999x9");
+		assert.equal(a,"999x9.");
+	})
+	it('should add zero char before . if blank', function(){
+		const a = model.pushDot("");
+		assert.equal(a,"0.");
 	})
 })
 
 describe("model.pushNumber", function(){
-	it("should push number as a string/char", function(){
+	it("should push number as a char", function(){
+		const a = model.pushNumber(9, "");
+		assert.equal(a,"9");
+	})
+	it("should not add numbers but concatenate as chars", function(){
+		const a = model.pushNumber(9, 9);
+		assert.equal(a,"99");
 	})
 })
 
 describe("model.pushOperator", function(){
 	it('should disallow sequential operators', function(){
+		const a = model.pushOperator("+","999+555+");
+		assert.equal(a,"999+555+");
+	})
+	it('should disallow operators on empty var', function(){
+		const a = model.pushOperator("+","");
+		assert.equal(a,"");
 	})
 })
 
 describe("model.clearAll", function(){
 	it("should clear everything", function(){
+		assert.equal(
+			"",
+			model.clearAll("555+555")
+		);
 	})
 })
 
 describe("model.clearEntry", function(){
 	it("should delete all if no operators found", function(){
+		assert.equal("", model.clearEntry("5555"));
 	})
   it("should delete operator if last character", function(){
+		assert.equal("555",model.clearEntry("555+"));
 	})
-	it("should delete number-string before an operator", function(){
+	it("should delete number-string before an operator",function(){
+		assert.equal("555+",model.clearEntry("555+444"));
 	})
 })
 
 describe("model.calculate", function(){
 	it("should do order of operations", function(){
+		// assert.equal("5+5",model.calculate("5+5=10"));
+	})
+	it('should throw an error on infinite loop', function(){
+		// assert.equal(a,b);
 	})
 })
 

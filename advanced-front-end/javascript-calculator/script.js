@@ -76,12 +76,15 @@ var view = {
 const re = /(-|\+|÷|x)/;
 
 var model = {
-  pushDot: function(buttonValue, cache){
+  pushDot: function(cache){
+    if (cache == ''){
+      cache = "0";
+    }
     return (cache.includes("."))
-      ? cache : cache+buttonValue;
+      ? cache : cache+".";
   },
   pushNumber: function(buttonValue, cache){
-    return cache+buttonValue;
+    return "" + cache+buttonValue;
   },
   pushOperator: function(buttonValue, cache){
     return (cache == '' || re.test(cache.slice(-1)))
@@ -102,7 +105,7 @@ var model = {
     if(re.test(cache.slice(-1))){ // if lastchar is operator
       cache = cache.slice(0,-1); // delete
     } else if(re.test(cache)){ // If string has operator
-      cache = cache.replace(selectLastEntry, '$1'); // remove numbers ahead
+      cache = cache.replace(lastEntry, '$1'); // remove numbers ahead
     } else { // no operators
       cache = '';
     }
@@ -110,11 +113,11 @@ var model = {
   },
   calculate: function(cache){
     let tempArr = util.splitNumAndOper(cache);
-    let orderOper = ["x","÷","+","-"]; // PEMDAS
+    const orderOper = ["x","÷","+","-"]; // PEMDAS
 
     // TODO catch potential infinite loop errors
     // Disallow operators used before equal sign
-    if($.isNumeric(this.storage.slice(-1))){
+    if($.isNumeric(cache.slice(-1))){
       while (tempArr.length > 1){
         orderOper.forEach(function(operator){
           while(tempArr.indexOf(operator) > 0){
