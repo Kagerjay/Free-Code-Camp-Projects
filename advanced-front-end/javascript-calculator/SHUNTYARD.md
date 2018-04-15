@@ -1,11 +1,13 @@
-https://youtu.be/QzVVjboyb0s
+[1] https://youtu.be/QzVVjboyb0s
+
+[2] https://youtu.be/fxnsOiIGPXI → 12 y.o kids algorithm
 
 ## Glossary
 
 - Tokens - these are sets of numbers
 - Operators - +-%/ etc
 
-## Infix notation
+## Infix notation [1]
 
 `i = 9 + 42/(7-3)`
 
@@ -13,7 +15,7 @@ Infix notation is basic order of operations on how we calculate things. Look for
 
 However, its not easy for computers to process. Solution is to use reverse Polish
 
-## Reverse Polish
+## Reverse Polish [1]
 
 Expressions are parsed left to right.
 
@@ -26,10 +28,15 @@ operation order is done
 - 24 / 4 = 6
 - 9 + 6 = 15
 
-## Basic version of the algorithm
+Another Example [2]
 
-- Stack of operations
-- Queue for the output
+- Infix: 5+2x3
+- Postfix: 523x+
+
+## Basic version of the algorithm [1]
+
+- Stack of operations - LIFO
+- Queue for the output - FIFO
 - Array (or other list) of tokens)
 
 ```
@@ -48,5 +55,26 @@ While tokens to read:
 While there's operators on the stack, pop them to the queue
 ```
 
-## Breaking it down
+## Postfixing in More Detail [2]
 
+X and / have precedence of 1.  + and - has precedence of 2.
+
+Example case for using shuntyard algorithm. Infix starting point:
+
+`1+2x3+4`
+
+becomes. Postfix Endpoint:
+
+`123x+4+` 
+
+How does this happen? Steps:
+
+| 1       |    |
+|---------|----|
+| 1       | +  |
+| 12      | +  |
+| 12      | +x |
+| 123     | +x |
+| 123x+   | +  |
+| 123x+4  | +  |
+| 123x4+4 |    |
