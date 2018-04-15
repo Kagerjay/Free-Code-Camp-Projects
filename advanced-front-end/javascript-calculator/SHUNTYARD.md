@@ -69,8 +69,9 @@ becomes. Postfix Endpoint:
 
 How does this happen? Steps:
 
-| 1       |    |
+| Array       | Stack    |
 |---------|----|
+| 1       |    |
 | 1       | +  |
 | 12      | +  |
 | 12      | +x |
