@@ -62,6 +62,7 @@ var util = {
      */
     let valueStack = [];
     let operStack = [];
+    let isOperPushReady = false;
     const PEMDAS = {
       "x": 2,
       "÷": 2,
@@ -73,17 +74,22 @@ var util = {
     rawArr.forEach(function(el,index,arr){
       if($.isNumeric(el)){ // We have a number
         valueStack.push(el);
-      } else { // We have an operator
-        operStack.push(el);
-        // If operator is not empty AND has a higher precedence than previous operator
-        if(operStack.length !== 1 && (PEMDAS[el] > PEMDAS[operStack.slice(-2)[0]])){
+        // Oper always adjacent to left and right num, this accounts for right num
+        if(isOperPushReady){
           valueStack = valueStack.concat(operStack.reverse());
           operStack = [];
+          isOperPushReady = false;
+        }
+      } else { // We have an operator
+        operStack.push(el);
+        // Need at least 2 oper to compare if current operator has higher precedence than previous
+        if(operStack.length !== 1 && (PEMDAS[el] > PEMDAS[operStack.slice(-2)[0]])){
+          isOperPushReady = true;
         }
       }
     });
     // Push remaining operators onto valuestack
-    valueStack = valueStack.concat(operStack.reverse());
+    valueStack = valueStack.concat(operStack);
     return valueStack;
   },
   shuntyardCalc: function(rawString){
@@ -151,7 +157,9 @@ var model = {
     const orderOper = ["x","÷","+","-"]; // PEMDAS
 
     // Edsger Dijkstra - Shuntyard Algorithm
-    cache = util.shuntyardSort(tempArr);
+    tempArr = util.shuntyardSort(tempArr);
+    tempArr = util.shuntyardSort(tempArr);
+    cache = tempArr.toString();
     return cache;
   }
 };

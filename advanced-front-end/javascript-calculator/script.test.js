@@ -122,7 +122,7 @@ describe('util.shuntyardSort', function(){
 	it('should convert infix to PEMDAS-sorted postfix', function(){
 		const infix = [1,'+',2,'x',3,'+',4];
 		const postfix = [1,2,3,'x','+',4,'+'];
-		assert.equal(postfix, util.shuntyardSort(infix));
+		assert.deepEqual(postfix, util.shuntyardSort(infix));
 	})
 })
 describe('util.shuntyardCalc', function(){
