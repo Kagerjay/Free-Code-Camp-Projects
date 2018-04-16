@@ -5,7 +5,6 @@ var util = {
     // '12+345x6/789'   to  [12, +, 345, x, 6, /, 789]
 
     let splitArray = rawString.match(/\d+|[\+-÷x]/g);
-    let assocPropArray = [];
     let isPreviousOperatorMinusSign = false;
     // First Convert Elements into actual Numbers
     splitArray = splitArray.map(function(el){
@@ -51,8 +50,44 @@ var util = {
   },
   exceedDisplay: function(rawString){
     return (rawString.length > 9) ? true : false;
-  }
+  },
+  shuntyardSort: function(rawArr){
+    if(!Array.isArray([1, 2, 3])){
+      console.error("NOT AN ARRAY!");
+    }
+    /*
+     * @param:  VS = value stack
+     * @param:  OS = operator stack
+     * @param:  PE = PEMDAS , order of operation
+     */
+    let valueStack = [];
+    let operStack = [];
+    const PEMDAS = {
+      "x": 2,
+      "÷": 2,
+      "+": 1,
+      "-": 1
+    }
 
+    // Convert infix to PEMDAS postfix
+    rawArr.forEach(function(el,index,arr){
+      if($.isNumeric(el)){ // We have a number
+        valueStack.push(el);
+      } else { // We have an operator
+        operStack.push(el);
+        // If operator is not empty AND has a higher precedence than previous operator
+        if(operStack.length !== 1 && (PEMDAS[el] > PEMDAS[operStack.slice(-2)[0]])){
+          valueStack = valueStack.concat(operStack.reverse());
+          operStack = [];
+        }
+      }
+    });
+    // Push remaining operators onto valuestack
+    valueStack = valueStack.concat(operStack.reverse());
+    return valueStack;
+  },
+  shuntyardCalc: function(rawString){
+  }
 }
 
 // https://stackoverflow.com/questions/5834318/are-variable-operators-possible
@@ -115,21 +150,11 @@ var model = {
     let tempArr = util.splitNumAndOper(cache);
     const orderOper = ["x","÷","+","-"]; // PEMDAS
 
-    // TODO catch potential infinite loop errors
-    // Disallow operators used before equal sign
-    if($.isNumeric(cache.slice(-1))){
-      while (tempArr.length > 1){
-        orderOper.forEach(function(operator){
-          while(tempArr.indexOf(operator) > 0){
-            util.calculatePartials(operator,tempArr);
-          }
-        });
-      }
-      cache = cache + "=" + tempArr.toString();
-    }
+    // Edsger Dijkstra - Shuntyard Algorithm
+    cache = util.shuntyardSort(tempArr);
     return cache;
   }
-}
+};
 
 // Display, Read, Update, Destroy
 // VIEWS + CONTROLLER IN JQUERY
