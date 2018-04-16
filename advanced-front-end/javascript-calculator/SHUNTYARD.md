@@ -2,6 +2,11 @@
 
 [2] https://youtu.be/fxnsOiIGPXI → 12 y.o kids algorithm
 
+[3] https://www.geeksforgeeks.org/expression-evaluation/
+
+[4] http://faculty.cs.niu.edu/~hutchins/csci241/eval.htm
+
+
 ## Glossary
 
 - Tokens - these are sets of numbers
@@ -100,6 +105,31 @@ Essentially what happens is, 1 numeric token is added and the an operator. When 
 
 The array here is transposed from previous example. The queue is dependent on arrays values. When an array is a number, queue pushes value. When its an operator, the last two numbers are immediately performed. The queue is then updated
 
+### Calculating a postfix expression [4]
+
+None of the above examples [1], [2], or [3] source summarized the pseudocode to calculate the postfix calculation.
+
+[4] covers this. Note the above examples I have used are just for a simple-use-case (only multiply, division, subtraction, addition) and does not consider (%, ^, `(`, or `)`). The above sources all cover these.
+
+To calculate a postfix expression from left to right, this is pseudocode
+
+```
+ Start with an empty stack.  We scan P from left to right.
+
+ While (we have not reached the end of P)
+    If an operand is found
+       push it onto the stack
+    End-If
+    If an operator is found
+       Pop the stack and call the value A
+       Pop the stack and call the value B
+       Evaluate B op A using the operator just found.
+       Push the resulting value onto the stack
+    End-If
+End-While
+Pop the stack (this is the final value)
+```
+
 ## TL-DR
 
 ### infix to postfix - how calculations syntax differs for calculations
@@ -139,3 +169,7 @@ That's pretty much it
 ## TL-DR 2.0
 
 Djinskas Algorithm converts an infix value to postfix sorted Left-To-Right based on PEMDAS (order of operations)
+
+----------------------------------
+
+
