@@ -130,6 +130,47 @@ End-While
 Pop the stack (this is the final value)
 ```
 
+### Ramblings to self
+
+Using the original postfix example `123x+4+`, this is the steps required to evaluate it to the answer 11
+
+1. `123x+4+`
+2. `16+4+`
+3. `74+`
+4. `11`
+
+So what happened is the following:
+
+- Search left to right
+- Find an operator
+- If an operator is found, calculate expression with 2 previous values
+- Push the new value
+
+Repeat until no values left in stack. One question I have regarding this is whether or not you need to start back at index 0 everytime an expression is calculated. Because looping everytime means a larger bigO and wasted steps. However keeping track of the index seems quite difficult.
+
+The index of interest in above example looks thusly (*index 0 is first element*)
+
+1. Index 3 - this is "x"
+2. Index 2 - this is "+"
+3. Index 2 - this is "+"
+4. Final answer
+
+I would need to see more example to see a pattern. My gut instinct tells me that because the "x" is next to "+", this changed the index of the operator by 1.
+
+In anycase - the index of interest decreased in value or stayed the same. It did not increase. Also, my algorithm does not know if there's an operator after an operator.
+
+Or does it? There's always a set of 3 numbers for every 2 operators in postfix notation.
+
+Had we taken the previous example again, let's look at it
+
+- set of 3 numbers followed by 2 operators
+- set of 2 numbers followed by 1 operator
+- set of 2 numbers followed by 1 operator
+- Final answer
+
+The index of interest (the operator) seems to be always equal to the set of numbers remaining.
+
+
 ## TL-DR
 
 ### infix to postfix - how calculations syntax differs for calculations
