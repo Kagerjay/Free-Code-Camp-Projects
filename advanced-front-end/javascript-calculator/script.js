@@ -111,19 +111,23 @@ var util = {
     let infiniteLoopCounter = 0;
     let index = 0;
     let evalPartial = 0;
+    let firstNum = 0;
+    let secondNum = 0;
 
     debugger;
     // Calculate the postfix
-    // while(rawArr.length > 3){
-    //   index = rawArr.findIndex(findFirstOperator);
-    //   evalPartial = operations[rawArr[index]](rawArr.splice(index,-1), rawArr.splice(index,-1));
-    //   rawArr.splice(index,0, evalPartial);
-    //
-    //   infiniteLoopCounter++;
-    //   if(infiniteLoopCounter > 10){
-    //     debugger;
-    //   };
-    // }
+    while(rawArr.length > 3){
+      index = rawArr.findIndex(findFirstOperator);
+      firstNum = rawArr.splice(index-1,index);
+      secondNum = rawArr.splice(index-1,index);
+      evalPartial = operations[rawArr[index]](firstNum, secondNum);
+      rawArr.splice(index,0, evalPartial);
+
+      infiniteLoopCounter++;
+      if(infiniteLoopCounter > 10){
+        debugger;
+      };
+    }
 
     return rawArr.toString();
   }
