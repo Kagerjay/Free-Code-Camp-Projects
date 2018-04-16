@@ -1,3 +1,13 @@
+// https://stackoverflow.com/questions/5834318/are-variable-operators-possible
+// Math library
+var operations = {
+  'x': function(a,b) { return a*b},
+  '÷': function(a,b) { return a/b},
+  '+': function(a,b) { return a+b},
+  '-': function(a,b) { return a-b},
+}
+const isOper = /(-|\+|÷|x)/;
+
 var util = {
   splitNumAndOper: function(rawString){
     // https://stackoverflow.com/questions/4437916/how-to-convert-all-elements-in-an-array-to-integer-in-javascript
@@ -52,14 +62,10 @@ var util = {
     return (rawString.length > 9) ? true : false;
   },
   shuntyardSort: function(rawArr){
-    if(!Array.isArray([1, 2, 3])){
-      console.error("NOT AN ARRAY!");
+    if(!Array.isArray(rawArr)){
+      console.error("shuntyardSort did not receive an Array");
     }
-    /*
-     * @param:  VS = value stack
-     * @param:  OS = operator stack
-     * @param:  PE = PEMDAS , order of operation
-     */
+
     let valueStack = [];
     let operStack = [];
     let isOperPushReady = false;
@@ -92,17 +98,35 @@ var util = {
     valueStack = valueStack.concat(operStack);
     return valueStack;
   },
-  shuntyardCalc: function(rawString){
-  }
-}
+  shuntyardCalc: function(rawArr){
+    // Small Helper function for shuntyardCalc
+    function findFirstOperator(element){
+      return isOper.test(element);
+    }
 
-// https://stackoverflow.com/questions/5834318/are-variable-operators-possible
-// Math library
-var operations = {
-  'x': function(a,b) { return a*b},
-  '÷': function(a,b) { return a/b},
-  '+': function(a,b) { return a+b},
-  '-': function(a,b) { return a-b},
+    if(!Array.isArray(rawArr)){
+      console.error("shuntyardCalc did not receive an Array");
+    }
+    let queueStack =[];
+    let infiniteLoopCounter = 0;
+    let index = 0;
+    let evalPartial = 0;
+
+    debugger;
+    // Calculate the postfix
+    // while(rawArr.length > 3){
+    //   index = rawArr.findIndex(findFirstOperator);
+    //   evalPartial = operations[rawArr[index]](rawArr.splice(index,-1), rawArr.splice(index,-1));
+    //   rawArr.splice(index,0, evalPartial);
+    //
+    //   infiniteLoopCounter++;
+    //   if(infiniteLoopCounter > 10){
+    //     debugger;
+    //   };
+    // }
+
+    return rawArr.toString();
+  }
 }
 
 var view = {
@@ -113,8 +137,6 @@ var view = {
     console.log('this cache', data.cache);
   }
 }
-
-const re = /(-|\+|÷|x)/;
 
 var model = {
   pushDot: function(cache){
@@ -128,7 +150,7 @@ var model = {
     return "" + cache+buttonValue;
   },
   pushOperator: function(buttonValue, cache){
-    return (cache == '' || re.test(cache.slice(-1)))
+    return (cache == '' || isOper.test(cache.slice(-1)))
       ? cache : cache+buttonValue;
   },
   clearAll: function(buttonValue, cache){
@@ -143,9 +165,9 @@ var model = {
     // 4. *$)(.*)/       Grab everything after
     const lastEntry = /(\+|÷|x|-)(?=[^(\+|÷|x|\-)]*$)(.*)/;
 
-    if(re.test(cache.slice(-1))){ // if lastchar is operator
+    if(isOper.test(cache.slice(-1))){ // if lastchar is operator
       cache = cache.slice(0,-1); // delete
-    } else if(re.test(cache)){ // If string has operator
+    } else if(isOper.test(cache)){ // If string has operator
       cache = cache.replace(lastEntry, '$1'); // remove numbers ahead
     } else { // no operators
       cache = '';
@@ -158,7 +180,7 @@ var model = {
 
     // Edsger Dijkstra - Shuntyard Algorithm
     tempArr = util.shuntyardSort(tempArr);
-    tempArr = util.shuntyardSort(tempArr);
+    tempArr = util.shuntyardCalc(tempArr);
     cache = tempArr.toString();
     return cache;
   }

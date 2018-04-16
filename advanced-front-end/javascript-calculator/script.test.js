@@ -90,10 +90,10 @@ describe("model.clearEntry", function(){
 	it("should delete all if no operators found", function(){
 		assert.equal("", model.clearEntry("5555"));
 	})
-  it("should delete operator if last character", function(){
+  it("should delete operator if it is last character", function(){
 		assert.equal("555",model.clearEntry("555+"));
 	})
-	it("should delete number-string before an operator",function(){
+	it("should delete number token before an operator",function(){
 		assert.equal("555+",model.clearEntry("555+444"));
 	})
 })
@@ -127,6 +127,8 @@ describe('util.shuntyardSort', function(){
 })
 describe('util.shuntyardCalc', function(){
 	it('should calculate postfix equation', function(){
+			const sortedPostfix = [1,2,3,'x','+',4,'+'];
+			assert.equal(11, util.shuntyardCalc(sortedPostfix));
 	})
 })
 
