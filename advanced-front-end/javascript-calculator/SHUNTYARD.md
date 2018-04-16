@@ -1,6 +1,6 @@
-[1] https://youtu.be/QzVVjboyb0s
+[1] https://youtu.be/QzVVjboyb0s - "Shunting Yard Algorithm - Intro and Reverse Polish Notation" 
 
-[2] https://youtu.be/fxnsOiIGPXI → 12 y.o kids algorithm
+[2] https://youtu.be/fxnsOiIGPXI → 12 y.o kids algorithm (Best video to understand)
 
 [3] https://www.geeksforgeeks.org/expression-evaluation/
 
