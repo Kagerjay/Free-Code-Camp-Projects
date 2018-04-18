@@ -100,10 +100,7 @@ describe("model.clearEntry", function(){
 
 describe("model.calculate", function(){
 	it("should do order of operations", function(){
-		// assert.equal("5+5",model.calculate("5+5=10"));
-	})
-	it('should throw an error on infinite loop', function(){
-		// assert.equal(a,b);
+		assert.equal("5+5=10",model.calculate("5+5"));
 	})
 })
 

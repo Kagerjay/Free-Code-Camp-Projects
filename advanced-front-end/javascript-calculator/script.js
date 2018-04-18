@@ -139,11 +139,11 @@ var util = {
 }
 
 var view = {
-  display: function(data){
-    $('#entry').html(data.storage);
-    $('#output').html(data.cache);
-    console.log('this storage' , data.storage);
-    console.log('this cache', data.cache);
+  display: function(cache){
+    $('#entry').html(cache);
+    $('#output').html(cache);
+    console.log('this storage' , cache);
+    console.log('this cache', cache);
   }
 }
 
@@ -185,12 +185,11 @@ var model = {
   },
   calculate: function(cache){
     let tempArr = util.splitNumAndOper(cache);
-    const orderOper = ["x","÷","+","-"]; // PEMDAS
 
     // Edsger Dijkstra - Shuntyard Algorithm
     tempArr = util.shuntyardSort(tempArr);
     tempArr = util.shuntyardCalc(tempArr);
-    cache = tempArr.toString();
+    cache = cache + "=" + tempArr.toString();
     return cache;
   }
 };
