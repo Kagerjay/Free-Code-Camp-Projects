@@ -3,7 +3,7 @@
 var operations = {
   'x': function(a,b) { return a*b},
   '÷': function(a,b) { return a/b},
-  '+': function(a,b) { return a+b},
+  '+': function(a,b) { return parseInt(a)+parseInt(b)},
   '-': function(a,b) { return a-b},
 }
 const isOper = /(-|\+|÷|x)/;
@@ -107,21 +107,26 @@ var util = {
     if(!Array.isArray(rawArr)){
       console.error("shuntyardCalc did not receive an Array");
     }
-    let queueStack =[];
     let infiniteLoopCounter = 0;
     let index = 0;
     let evalPartial = 0;
     let firstNum = 0;
     let secondNum = 0;
+    let op = 0;
 
-    debugger;
-    // Calculate the postfix
-    while(rawArr.length > 3){
+    /*
+     * Calculate the postfix after Djikstras Shuntyard Sort Algo
+     * By finding the first operator index, calculating operand + 2previous values
+     * and pushing result back in
+     * Repeat until everything is calculated
+     */
+    while(rawArr.length > 1){
       index = rawArr.findIndex(findFirstOperator);
-      firstNum = rawArr.splice(index-1,index);
-      secondNum = rawArr.splice(index-1,index);
-      evalPartial = operations[rawArr[index]](firstNum, secondNum);
-      rawArr.splice(index,0, evalPartial);
+      firstNum = rawArr.splice(index-1,1);
+      secondNum = rawArr.splice(index-2,1);
+      op = rawArr.splice(index-2,1);
+      evalPartial = operations[op](firstNum, secondNum);
+      rawArr.splice(index-2,0, evalPartial);
 
       infiniteLoopCounter++;
       if(infiniteLoopCounter > 10){
