@@ -34,10 +34,6 @@ describe("util.SplitNumAndOper", function(){
 		const a = util.splitNumAndOper("6+4+3");
 		assert.deepEqual(a,[6,'+',4,'+',3]);
 	})
-	it('should have "6-4-3" return [6,"+",-4,"+",-3]', function(){
-		const a = util.splitNumAndOper("6-4-3");
-		assert.deepEqual(a,[6,'+',-4,'+',-3]);
-	})
 })
 
 describe("model.pushDot", function(){

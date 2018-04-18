@@ -1,10 +1,10 @@
 // https://stackoverflow.com/questions/5834318/are-variable-operators-possible
 // Math library
 var operations = {
-  'x': function(a,b) { return a*b},
-  '÷': function(a,b) { return a/b},
-  '+': function(a,b) { return parseInt(a)+parseInt(b)},
-  '-': function(a,b) { return a-b},
+  'x': function(a,b) { return b*a},
+  '÷': function(a,b) { return b/a},
+  '+': function(a,b) { return parseInt(b)+parseInt(a)},
+  '-': function(a,b) { return b-a},
 }
 const isOper = /(-|\+|÷|x)/;
 
@@ -25,28 +25,7 @@ var util = {
       }
     });
 
-    if(splitArray.indexOf("-") > 0){
-      // If it has a minus sign, apply associative property
-      // [6,"-",4,"-",3] becomes [6,"+", -4, "+", -3]
-      // Map does not work here since it relies on previous values
-      splitArray = splitArray.map(function(el){
-        if(el=="-"){
-          el = "+";
-          isPreviousOperatorMinusSign = true;
-          return el;
-        } else if(isPreviousOperatorMinusSign){
-          el = parseInt(-el);
-          isPreviousOperatorMinusSign = false;
-          return el;
-        } else { //its a Number or a non(-) operator
-          return el;
-        }
-      });
-      return splitArray;
-    } else {
-      // else its doesn't have minus signs
-      return splitArray;
-    }
+    return splitArray;
   },
   calculatePartials: function(operator, tempArr){
     const indexStart = tempArr.indexOf(operator)-1;
