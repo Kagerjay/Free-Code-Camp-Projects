@@ -15,7 +15,6 @@ var util = {
     // '12+345x6/789'   to  [12, +, 345, x, 6, /, 789]
 
     let splitArray = rawString.match(/\d+|[\+-÷x]/g);
-    let isPreviousOperatorMinusSign = false;
     // First Convert Elements into actual Numbers
     splitArray = splitArray.map(function(el){
       if($.isNumeric(el)){
@@ -118,26 +117,36 @@ var util = {
 }
 
 var view = {
-  display: function(cache){
+  render: function(cache){
+    //https://stackoverflow.com/questions/49546448/javascript-split-a-string-into-array-matching-parameters
+    let currentBuffer = cache.match(/\d+|[\+-\/x]/g).pop();
     $('#entry').html(cache);
-    $('#output').html(cache);
-    console.log('this storage' , cache);
-    console.log('this cache', cache);
+    $('#output').html(currentBuffer);
   }
 }
 
 var model = {
+  reset: function(cache){
+    function getEqualSignAndNumber(str){
+      return (str.includes("=")) ? str.match(/=.*/)[0] : str;
+    }
+    return getEqualSignAndNumber(cache);
+  },
   pushDot: function(cache){
-    if (cache == ''){
+    if (cache == '' || cache.includes("=")){
       cache = "0";
     }
     return (cache.includes("."))
       ? cache : cache+".";
   },
   pushNumber: function(buttonValue, cache){
-    return "" + cache+buttonValue;
+    // model.reset does not remove "=", it iss kept to tell if calculate function was last call made
+    return (cache.includes("=")) ? buttonValue : "" + cache+buttonValue;
   },
   pushOperator: function(buttonValue, cache){
+    if(cache.includes("=")) {
+      cache = cache.substring(1); // remove first "="
+    }
     return (cache == '' || isOper.test(cache.slice(-1)))
       ? cache : cache+buttonValue;
   },
@@ -170,7 +179,7 @@ var model = {
     tempArr = util.shuntyardCalc(tempArr);
     cache = cache + "=" + tempArr.toString();
     return cache;
-  }
+  },
 };
 
 // Display, Read, Update, Destroy
@@ -216,7 +225,8 @@ $(document).ready(function(){
         console.log('ERROR DEFAULT CASE SHOULD NOT RUN!');
         break;
     }
-    view.display(cache);
+    view.render(cache); // Consider putting this into each function
+    cache = model.reset(cache);
   });
 });
 

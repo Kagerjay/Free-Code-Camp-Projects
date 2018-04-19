@@ -34,6 +34,9 @@ describe("util.SplitNumAndOper", function(){
 		const a = util.splitNumAndOper("6+4+3");
 		assert.deepEqual(a,[6,'+',4,'+',3]);
 	})
+	// it('should avoid splitting negative(-) sign from previous calculation', function(){
+	// 	fail();
+	// })
 })
 
 describe("model.pushDot", function(){
@@ -49,6 +52,9 @@ describe("model.pushDot", function(){
 		const a = model.pushDot("");
 		assert.equal(a,"0.");
 	})
+	it('should do nothing & delete = sign if previous call was calculate', function(){
+	})
+
 })
 
 describe("model.pushNumber", function(){
@@ -59,6 +65,8 @@ describe("model.pushNumber", function(){
 	it("should not add numbers but concatenate as chars", function(){
 		const a = model.pushNumber(9, 9);
 		assert.equal(a,"99");
+	})
+	it('should do nothing & delete = sign if previous call was calculate', function(){
 	})
 })
 
@@ -100,7 +108,7 @@ describe("model.calculate", function(){
 	})
 })
 
-describe("view.display", function(){
+describe("view.render", function(){
 	it('should throw "Digit Limit Met" if lastNumSeq > 9 chars', function(){
 	})
 	it('should throw "Digit Limit Met" if calculation > 9 chars', function(){
@@ -108,6 +116,11 @@ describe("view.display", function(){
 	it('should throw "Digit Limit Met" if cache > 26 char', function(){
 	})
 	it('should show 0 if cache is blank', function(){
+	})
+})
+
+describe('view.render CACHE RESETS', function(){
+	it('should return the number after "=" if it is present', function(){
 	})
 })
 
