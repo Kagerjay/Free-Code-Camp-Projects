@@ -26,16 +26,6 @@ var util = {
 
     return splitArray;
   },
-  calculatePartials: function(operator, tempArr){
-    const indexStart = tempArr.indexOf(operator)-1;
-    const removedArr = tempArr.splice(indexStart,3);
-    const firstNum = parseInt(removedArr[0]);
-    const secondNum = parseInt(removedArr[2]);
-    const calcRes = operations[operator](firstNum, secondNum);
-
-    tempArr.splice(indexStart, 0, calcRes); // push back old result in
-    return tempArr;
-  },
   exceedDisplay: function(rawString){
     return (rawString.length > 9) ? true : false;
   },
@@ -113,24 +103,35 @@ var util = {
     }
 
     return rawArr.toString();
+  },
+  grabLastToken: function(rawStr){
+    //https://stackoverflow.com/questions/49546448/javascript-split-a-string-into-array-matching-parameters
+    return (rawStr == "" || rawStr == "0.") ? rawStr : rawStr.match(/\d+|[\+-\/x÷]/g).pop();
   }
 }
 
 var view = {
   render: function(cache){
-    //https://stackoverflow.com/questions/49546448/javascript-split-a-string-into-array-matching-parameters
-    let currentBuffer = cache.match(/\d+|[\+-\/x]/g).pop();
-    $('#entry').html(cache);
-    $('#output').html(currentBuffer);
+    // Use placeholder vars for display to prevent 0 and "" confusion
+    let topDisplay = util.grabLastToken(cache);
+    let botDisplay = cache;
+
+    if(botDisplay == ""){
+      botDisplay = 0;
+    }
+    if(topDisplay == ""){
+      topDisplay = 0;
+    }
+    $('#topDisplay').html(topDisplay);
+    $('#botDisplay').html(botDisplay);
+    console.log(cache);
+    console.log(typeof(cache));
   }
 }
 
 var model = {
-  reset: function(cache){
-    function getEqualSignAndNumber(str){
-      return (str.includes("=")) ? str.match(/=.*/)[0] : str;
-    }
-    return getEqualSignAndNumber(cache);
+  getEqualSignAndNumber: function(cache){
+    return (cache.includes("=")) ? cache.match(/=.*/)[0] : cache;
   },
   pushDot: function(cache){
     if (cache == '' || cache.includes("=")){
@@ -140,7 +141,7 @@ var model = {
       ? cache : cache+".";
   },
   pushNumber: function(buttonValue, cache){
-    // model.reset does not remove "=", it iss kept to tell if calculate function was last call made
+    // model.reset does not remove "=", it is kept to tell if calculate function was last call made
     return (cache.includes("=")) ? buttonValue : "" + cache+buttonValue;
   },
   pushOperator: function(buttonValue, cache){
@@ -162,7 +163,9 @@ var model = {
     // 4. *$)(.*)/       Grab everything after
     const lastEntry = /(\+|÷|x|-)(?=[^(\+|÷|x|\-)]*$)(.*)/;
 
-    if(isOper.test(cache.slice(-1))){ // if lastchar is operator
+    if (cache.includes("=")){
+      cache = "";
+    } else if(isOper.test(cache.slice(-1))){ // if lastchar is operator
       cache = cache.slice(0,-1); // delete
     } else if(isOper.test(cache)){ // If string has operator
       cache = cache.replace(lastEntry, '$1'); // remove numbers ahead
@@ -192,7 +195,7 @@ $(document).ready(function(){
     switch(buttonValue) {
       // Numbers
       case '.':
-        cache = model.pushDot(buttonValue, cache);
+        cache = model.pushDot(cache);
         break;
       case '0':
       case '1':
@@ -225,8 +228,8 @@ $(document).ready(function(){
         console.log('ERROR DEFAULT CASE SHOULD NOT RUN!');
         break;
     }
-    view.render(cache); // Consider putting this into each function
-    cache = model.reset(cache);
+    view.render(cache);
+    cache = model.getEqualSignAndNumber(cache);
   });
 });
 
