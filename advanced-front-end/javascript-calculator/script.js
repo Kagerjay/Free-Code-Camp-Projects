@@ -140,11 +140,11 @@ var model = {
     return (cache.includes("."))
       ? cache : cache+".";
   },
-  pushNumber: function(buttonValue, cache){
+  pushNumber: function(cache,buttonValue) {
     // model.reset does not remove "=", it is kept to tell if calculate function was last call made
     return (cache.includes("=")) ? buttonValue : "" + cache+buttonValue;
   },
-  pushOperator: function(buttonValue, cache){
+  pushOperator: function(cache, buttonValue){
     if(cache.includes("=")) {
       cache = cache.substring(1); // remove first "="
     }
@@ -189,6 +189,7 @@ var model = {
 // VIEWS + CONTROLLER IN JQUERY
 $(document).ready(function(){
   let cache = '';
+  let lastCall = '';
   // Condense down into one click button
   $("button").on("click", function(){
     let buttonValue = $(this).attr("value");
@@ -207,13 +208,13 @@ $(document).ready(function(){
       case '7':
       case '8':
       case '9':
-        cache = model.pushNumber(buttonValue, cache);
+        cache = model.pushNumber(cache, buttonValue);
         break;
       case 'x':
       case '÷':
       case '-':
       case '+':
-        cache = model.pushOperator(buttonValue, cache);
+        cache = model.pushOperator(cache, buttonValue);
         break;
       case 'AC':
         cache = model.clearAll(cache);
@@ -228,8 +229,8 @@ $(document).ready(function(){
         console.log('ERROR DEFAULT CASE SHOULD NOT RUN!');
         break;
     }
-    view.render(cache);
-    cache = model.getEqualSignAndNumber(cache);
+    view.render(buttonValue,cache);
+    lastCall = buttonValue;
   });
 });
 

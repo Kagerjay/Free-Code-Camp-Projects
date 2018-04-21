@@ -41,7 +41,7 @@ describe("model.pushDot", function(){
 
 describe("model.pushNumber", function(){
 	it("should push number as a char", function(){
-		const a = model.pushNumber(9, "");
+		const a = model.pushNumber("", 9);
 		assert.equal(a,"9");
 	})
 	it("should not add numbers but concatenate as chars", function(){
@@ -49,21 +49,21 @@ describe("model.pushNumber", function(){
 		assert.equal(a,"99");
 	})
 	it('should do nothing & delete = sign if previous call was calculate', function(){
-		assert.equal("5",model.pushNumber("5","=999"));
+		assert.equal("5",model.pushNumber("=999","5"));
 	})
 })
 
 describe("model.pushOperator", function(){
 	it('should disallow sequential operators', function(){
-		const a = model.pushOperator("+","999+555+");
+		const a = model.pushOperator("999+555+","+");
 		assert.equal(a,"999+555+");
 	})
 	it('should disallow operators on empty var', function(){
-		const a = model.pushOperator("+","");
+		const a = model.pushOperator("","+");
 		assert.equal(a,"");
 	})
 	it('should behave normally and delete "=" sign if previous call was calc', function(){
-		assert.equal("999+",model.pushOperator("+","=999"));
+		assert.equal("999+",model.pushOperator("=999","+"));
 	})
 })
 
@@ -92,6 +92,7 @@ describe("model.calculate", function(){
 	it("should do order of operations", function(){
 		assert.equal("5+5=10",model.calculate("5+5"));
 	})
+	it('')
 })
 
 describe("view.render", function(){
