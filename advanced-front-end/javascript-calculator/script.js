@@ -229,7 +229,7 @@ $(document).ready(function(){
         console.log('ERROR DEFAULT CASE SHOULD NOT RUN!');
         break;
     }
-    view.render(buttonValue,cache);
+    view.render(cache,buttonValue);
     lastCall = buttonValue;
   });
 });
