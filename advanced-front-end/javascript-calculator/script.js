@@ -111,11 +111,14 @@ var util = {
 }
 
 var view = {
-  render: function(cache){
+  render: function(cache,buttonValue){
     // Use placeholder vars for display to prevent 0 and "" confusion
     let topDisplay = util.grabLastToken(cache);
     let botDisplay = cache;
 
+    if(buttonValue == "CE"){
+      topDisplay = 0;
+    }
     if(botDisplay == ""){
       botDisplay = 0;
     }
@@ -230,7 +233,7 @@ $(document).ready(function(){
         break;
     }
     view.render(cache,buttonValue);
-    lastCall = buttonValue;
+    lastCall = buttonValue; // not used currently
   });
 });
 
