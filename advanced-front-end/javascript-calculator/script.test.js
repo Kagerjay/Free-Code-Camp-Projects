@@ -8,6 +8,7 @@ var assert = chai.assert;
 var expect = chai.expect;
 var should = chai.should();
 
+// Based on http://yeoman.io/contributing/testing-guidelines.html
 
 describe('MODEL', function(){
 	describe('getEqualSignAndNumber', () =>{
@@ -19,17 +20,20 @@ describe('MODEL', function(){
 		})
 	})
 	describe("pushDot", () =>{
-		it('should allow only one "."', () =>{
+		it('allow only one "." per number token', () =>{
 			assert.equal("9.99",model.pushDot("9.99"));
 		})
 		it('should add . if none present', () =>{
 			assert.equal("999x9.",model.pushDot("999x9"));
 		})
-		it('should add zero char before . if blank', () =>{
+		it('should add 0 char if cache blank', () =>{
 			assert.equal("0.",model.pushDot(""));
 		})
-		it('should do nothing & delete = sign if previous call was calculate', () =>{
-			assert.equal("0.",model.pushDot("=999"));
+		it('should reset if lastCall was calculate', () =>{
+			assert.equal("0.",model.pushDot("999","calculate"));
+		})
+		it('should allow multiple "." for multiple numeric tokens', function(){
+			// assert.equal(a,b);
 		})
 	})
 	describe("pushNumber", () =>{
@@ -142,7 +146,7 @@ describe('UTIL', function(){
 			assert.equal("0.",util.grabLastToken("0."));
 		})
 	})
-})
+}) // END UTIL
 
 
 // RUN MOCHA

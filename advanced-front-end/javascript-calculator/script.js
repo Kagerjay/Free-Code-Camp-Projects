@@ -137,7 +137,7 @@ var model = {
     return (cache.includes("=")) ? cache.match(/=.*/)[0] : cache;
   },
   pushDot: function(cache, lastCall){
-    if (cache == '' || cache.includes("=")){
+    if(lastCall=="calculate" || cache ==""){
       cache = "0";
     }
     return (cache.includes("."))
@@ -192,7 +192,7 @@ var model = {
 // VIEWS + CONTROLLER IN JQUERY
 $(document).ready(function(){
   let cache = '';
-  let lastCall = '';
+  let lastCall = 'clearAll'; // Assume last functionCall is a hard reset
   // Condense down into one click button
   $("button").on("click", function(){
     let buttonValue = $(this).attr("value");
@@ -200,7 +200,7 @@ $(document).ready(function(){
       // Numbers
       case '.':
         cache = model.pushDot(cache, lastCall);
-        lastCall = "DOT";
+        lastCall = "pushDot";
         break;
       case '0':
       case '1':
@@ -213,26 +213,26 @@ $(document).ready(function(){
       case '8':
       case '9':
         cache = model.pushNumber(cache, buttonValue, lastCall);
-        lastCall = "NUM";
+        lastCall = "pushNumber";
         break;
       case 'x':
       case '÷':
       case '-':
       case '+':
         cache = model.pushOperator(cache, buttonValue, lastCall);
-        lastCall = "OP";
+        lastCall = "pushOperator";
         break;
       case 'AC':
         cache = model.clearAll(cache, lastCall);
-        lastCall = "AC";
+        lastCall = "clearAll";
         break;
       case 'CE':
         cache = model.clearEntry(cache, lastCall);
-        lastCall = "CE";
+        lastCall = "clearEntry";
         break;
       case '=':
         cache = model.calculate(cache, lastCall);
-        lastCall = "EQ";
+        lastCall = "calculate";
         break;
       default:
         console.log('ERROR DEFAULT CASE SHOULD NOT RUN!');
