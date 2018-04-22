@@ -3,6 +3,11 @@
 // UI
 mocha.setup('bdd')
 
+mocha.setup({
+	ui:'bdd',
+
+})
+
 // CHAI
 var assert = chai.assert;
 var expect = chai.expect;
@@ -33,7 +38,7 @@ describe('MODEL', function(){
 			assert.equal("0.",model.pushDot("999","calculate"));
 		})
 		it('allow multiple "." for multiple numeric tokens', function(){
-			// assert.equal(a,b);
+			assert.equal("12.34+56.",model.pushDot("12.34+56"));
 		})
 	})
 	describe("pushNumber", () =>{
@@ -87,7 +92,7 @@ describe('MODEL', function(){
 		})
 	})
 }) // END MODEL
-
+///////////////////////////////////////////////////////////
 describe('VIEW', function(){
 	describe("render", () =>{
 		it('throw "Digit Limit Met" if lastNumSeq > 9 chars', () =>{
@@ -106,8 +111,7 @@ describe('VIEW', function(){
 		})
 	})
 }) // END VIEW
-
-
+///////////////////////////////////////////////////////////
 describe('UTIL', function(){
 	describe("splitNumAndOper", () =>{
 		it('have "6+4+3" return [6,"+",4,"+",3]', () =>{
