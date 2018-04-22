@@ -133,17 +133,17 @@ var view = {
 }
 
 var model = {
-  getEqualSignAndNumber: function(cache){
+  getEqualSignAndNumber: function(cache, lastCall){
     return (cache.includes("=")) ? cache.match(/=.*/)[0] : cache;
   },
-  pushDot: function(cache){
+  pushDot: function(cache, lastCall){
     if (cache == '' || cache.includes("=")){
       cache = "0";
     }
     return (cache.includes("."))
       ? cache : cache+".";
   },
-  pushNumber: function(cache,buttonValue) {
+  pushNumber: function(cache,lastCall, buttonValue) {
     // model.reset does not remove "=", it is kept to tell if calculate function was last call made
     return (cache.includes("=")) ? buttonValue : "" + cache+buttonValue;
   },
@@ -157,7 +157,7 @@ var model = {
   clearAll: function(buttonValue, cache){
     return '';
   },
-  clearEntry: function(cache){
+  clearEntry: function(cache, lastCall){
     //https://stackoverflow.com/questions/11134004/regex-that-will-match-the-last-occurrence-of-dot-in-a-string/
     // targets last operator +÷x- and its' remaining string .......replaces it with nothing
     // 1. (\+|÷|x|-)     Seek Operators.
@@ -177,7 +177,7 @@ var model = {
     }
     return cache;
   },
-  calculate: function(cache){
+  calculate: function(cache, lastCall){
     let tempArr = util.splitNumAndOper(cache);
 
     // Edsger Dijkstra - Shuntyard Algorithm
@@ -199,7 +199,8 @@ $(document).ready(function(){
     switch(buttonValue) {
       // Numbers
       case '.':
-        cache = model.pushDot(cache);
+        cache = model.pushDot(cache, lastCall);
+        lastCall = "DOT";
         break;
       case '0':
       case '1':
@@ -211,29 +212,33 @@ $(document).ready(function(){
       case '7':
       case '8':
       case '9':
-        cache = model.pushNumber(cache, buttonValue);
+        cache = model.pushNumber(cache, buttonValue, lastCall);
+        lastCall = "NUM";
         break;
       case 'x':
       case '÷':
       case '-':
       case '+':
-        cache = model.pushOperator(cache, buttonValue);
+        cache = model.pushOperator(cache, buttonValue, lastCall);
+        lastCall = "OP";
         break;
       case 'AC':
-        cache = model.clearAll(cache);
+        cache = model.clearAll(cache, lastCall);
+        lastCall = "AC";
         break;
       case 'CE':
-        cache = model.clearEntry(cache);
+        cache = model.clearEntry(cache, lastCall);
+        lastCall = "CE";
         break;
       case '=':
-        cache = model.calculate(cache);
+        cache = model.calculate(cache, lastCall);
+        lastCall = "EQ";
         break;
       default:
         console.log('ERROR DEFAULT CASE SHOULD NOT RUN!');
         break;
     }
     view.render(cache,buttonValue);
-    lastCall = buttonValue; // not used currently
   });
 });
 
