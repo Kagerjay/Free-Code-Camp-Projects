@@ -16,14 +16,12 @@ var should = chai.should();
 // Based on http://yeoman.io/contributing/testing-guidelines.html
 
 describe('MODEL', function(){
-	describe('getEqualSignAndNumber', () =>{
-		it('do nothing if no equal sign', () =>{
-			assert.equal("555",model.getEqualSignAndNumber("555"));
-		})
-		it('grab equal sign and number if present', () =>{
-			assert.equal("=10",model.getEqualSignAndNumber("5+5=10"));
+	describe('getAnswer', function(){
+		it('grab number token after =', function(){
+			assert.equal("99",model.getAnswer("44+55=99"));
 		})
 	})
+
 	describe("pushDot", () =>{
 		it('allow only one "." per number token', () =>{
 			assert.equal("9.99",model.pushDot("9.99"));

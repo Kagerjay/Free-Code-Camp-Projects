@@ -133,8 +133,8 @@ var view = {
 }
 
 var model = {
-  getEqualSignAndNumber: function(cache, lastCall){
-    return (cache.includes("=")) ? cache.match(/=.*/)[0] : cache;
+  getAnswer: function(cache){
+    return cache.split('=')[1];
   },
   pushDot: function(cache, lastCall){
     if(lastCall=="calculate" || cache ==""){
@@ -148,9 +148,6 @@ var model = {
     return (cache.includes("=")) ? buttonValue : "" + cache+buttonValue;
   },
   pushOperator: function(cache, buttonValue, lastCall){
-    if(cache.includes("=")) {
-      cache = cache.substring(1); // remove first "="
-    }
     return (cache == '' || isOper.test(cache.slice(-1)))
       ? cache : cache+buttonValue;
   },
@@ -239,6 +236,10 @@ $(document).ready(function(){
         break;
     }
     view.render(cache,buttonValue);
+
+    if(lastCall == "calculate"){
+      cache = model.getAnswer(cache);
+    }
   });
 });
 
