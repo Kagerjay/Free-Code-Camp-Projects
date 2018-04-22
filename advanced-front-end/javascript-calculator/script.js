@@ -143,18 +143,18 @@ var model = {
     return (cache.includes("."))
       ? cache : cache+".";
   },
-  pushNumber: function(cache,lastCall, buttonValue) {
+  pushNumber: function(cache, buttonValue, lastCall) {
     // model.reset does not remove "=", it is kept to tell if calculate function was last call made
     return (cache.includes("=")) ? buttonValue : "" + cache+buttonValue;
   },
-  pushOperator: function(cache, buttonValue){
+  pushOperator: function(cache, buttonValue, lastCall){
     if(cache.includes("=")) {
       cache = cache.substring(1); // remove first "="
     }
     return (cache == '' || isOper.test(cache.slice(-1)))
       ? cache : cache+buttonValue;
   },
-  clearAll: function(buttonValue, cache){
+  clearAll: function(cache, lastCall){
     return '';
   },
   clearEntry: function(cache, lastCall){
