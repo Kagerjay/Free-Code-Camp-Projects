@@ -14,7 +14,7 @@ var util = {
     // https://stackoverflow.com/questions/49546448/javascript-split-a-string-into-array-matching-parameters
     // '12+345x6/789'   to  [12, +, 345, x, 6, /, 789]
 
-    let splitArray = rawString.match(/\d+|[\+-÷x]/g);
+    let splitArray = rawString.split(/([^0-9.]+)/);
     // First Convert Elements into actual Numbers
     splitArray = splitArray.map(function(el){
       if($.isNumeric(el)){

@@ -117,6 +117,9 @@ describe('UTIL', function(){
 		})
 		it('avoid splitting negative(-) sign from previous calculation', () =>{
 		})
+		it('tokenize decimal numbers as one token', function(){
+			assert.deepEqual([12.34, '+', 5], util.splitNumAndOper('12.34+5'));
+		})
 	})
 
 	describe('shuntyardSort', () =>{
