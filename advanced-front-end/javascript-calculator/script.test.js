@@ -88,6 +88,9 @@ describe('MODEL', function(){
 		it("do order of operations", () =>{
 			assert.equal("5+5=10",model.calculate("5+5"));
 		})
+		it('handle float calc',()=>{
+			assert.equal("12.34+5=17.34", model.calculate("12.34+5"));
+		})
 	})
 }) // END MODEL
 ///////////////////////////////////////////////////////////
@@ -116,6 +119,7 @@ describe('UTIL', function(){
 			assert.deepEqual([6,'+',4,'+',3], util.splitNumAndOper("6+4+3"));
 		})
 		it('avoid splitting negative(-) sign from previous calculation', () =>{
+			assert.equal([-1,'+',7], util.splitNumAndOper('-1+7'));
 		})
 		it('tokenize decimal numbers as one token', function(){
 			assert.deepEqual([12.34, '+', 5], util.splitNumAndOper('12.34+5'));
@@ -133,6 +137,9 @@ describe('UTIL', function(){
 		it('calculate postfix equation', () =>{
 				const sortedPostfix = [1,2,3,'x','+',4,'+'];
 				assert.equal(11, util.shuntyardCalc(sortedPostfix));
+		})
+		it('calculate postfix with float values', () => {
+			assert.equal(17.34,util.shuntyardCalc([12.34, 5, "+"]));
 		})
 	})
 

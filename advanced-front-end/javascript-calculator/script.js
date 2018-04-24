@@ -3,7 +3,7 @@
 var operations = {
   'x': function(a,b) { return b*a},
   '÷': function(a,b) { return b/a},
-  '+': function(a,b) { return parseInt(b)+parseInt(a)},
+  '+': function(a,b) { return parseFloat(b)+parseInt(a)},
   '-': function(a,b) { return b-a},
 }
 const isOper = /(-|\+|÷|x)/;
@@ -18,7 +18,7 @@ var util = {
     // First Convert Elements into actual Numbers
     splitArray = splitArray.map(function(el){
       if($.isNumeric(el)){
-        return parseInt(el);
+        return parseFloat(el);
       } else {
         return el;
       }
