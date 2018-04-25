@@ -10,12 +10,18 @@ const isOper = /(-|\+|÷|x)/;
 
 var util = {
   splitNumAndOper: function(rawString){
-    // https://stackoverflow.com/questions/4437916/how-to-convert-all-elements-in-an-array-to-integer-in-javascript
     // https://stackoverflow.com/questions/49546448/javascript-split-a-string-into-array-matching-parameters
-    // '12+345x6/789'   to  [12, +, 345, x, 6, /, 789]
 
-    let splitArray = rawString.split(/([^0-9.]+)/);
-    // First Convert Elements into actual Numbers
+    // Clean up data before Tokenization by applying Math Associative Property
+    rawString = rawString.replace(/\-/, "+-");
+    if(rawString.charAt(0) == "+"){
+      rawString = rawString.substring(1);
+    }
+
+    // Tokenize operators from numeric strings
+    let splitArray = rawString.split(/([^-0-9.]+)/);
+
+    // Parse numeric tokens into floats to prevent string concatenation during calculation
     splitArray = splitArray.map(function(el){
       if($.isNumeric(el)){
         return parseFloat(el);
@@ -67,9 +73,9 @@ var util = {
     return valueStack;
   },
   shuntyardCalc: function(rawArr){
-    // Small Helper function for shuntyardCalc
+    // Find first Operator except (-) because its reserved as a neg num not an operator anymore
     function findFirstOperator(element){
-      return isOper.test(element);
+      return /(\+|÷|x)/.test(element);
     }
 
     if(!Array.isArray(rawArr)){

@@ -23,19 +23,19 @@ describe('MODEL', function(){
 	})
 
 	describe("pushDot", () =>{
-		it('allow only one "." per number token', () =>{
+		it('forbid multiple "." for one token', () =>{
 			assert.equal("9.99",model.pushDot("9.99"));
 		})
-		it('add . if none present', () =>{
+		it('add dot if none present', () =>{
 			assert.equal("999x9.",model.pushDot("999x9"));
 		})
-		it('reset to 0. if cache blank', () =>{
+		it('add zero if empty cache', () =>{
 			assert.equal("0.",model.pushDot(""));
 		})
-		it('reset to 0. if lastCall was calculate', () =>{
+		it('reset to zero if calculate lastcall', () =>{
 			assert.equal("0.",model.pushDot("999","calculate"));
 		})
-		it('allow multiple "." for multiple numeric tokens', function(){
+		it('limit one "." per token', function(){
 			assert.equal("12.34+56.",model.pushDot("12.34+56"));
 		})
 	})
@@ -70,16 +70,16 @@ describe('MODEL', function(){
 	})
 
 	describe("clearEntry", () =>{
-		it("delete all if no operators found", () =>{
+		it("delete all if no operators", () =>{
 			assert.equal("", model.clearEntry("5555"));
 		})
-	  it("delete operator if its cache's last char", () =>{
+	  it("delete operator if cache's last char", () =>{
 			assert.equal("555",model.clearEntry("555+"));
 		})
-		it("delete number token before an operator",() =>{
+		it("delete number token before operator",() =>{
 			assert.equal("555+",model.clearEntry("555+444"));
 		})
-		it('clear all if lastcall is calculate', () =>{
+		it('delete all if calculate lastcall', () =>{
 			assert.equal("",model.clearEntry("5+5=10"));
 		})
 	})
@@ -115,45 +115,48 @@ describe('VIEW', function(){
 ///////////////////////////////////////////////////////////
 describe('UTIL', function(){
 	describe("splitNumAndOper", () =>{
-		it('have "6+4+3" return [6,"+",4,"+",3]', () =>{
+		it('do simple math', () =>{
 			assert.deepEqual([6,'+',4,'+',3], util.splitNumAndOper("6+4+3"));
 		})
-		it('avoid splitting negative(-) sign from previous calculation', () =>{
-			assert.equal([-1,'+',7], util.splitNumAndOper('-1+7'));
+		it('tokenize negative numbers', () =>{
+			assert.deepEqual([-1,'+',7], util.splitNumAndOper('-1+7'));
 		})
-		it('tokenize decimal numbers as one token', function(){
+		it('tokenize decimal numbers', function(){
 			assert.deepEqual([12.34, '+', 5], util.splitNumAndOper('12.34+5'));
 		})
 	})
 
 	describe('shuntyardSort', () =>{
-		it('convert infix to PEMDAS-sorted postfix', () =>{
+		it('convert infix to sorted postfix', () =>{
 			const infix = [1,'+',2,'x',3,'+',4];
 			const postfix = [1,2,3,'x','+',4,'+'];
 			assert.deepEqual(postfix, util.shuntyardSort(infix));
 		})
 	})
 	describe('shuntyardCalc', () =>{
-		it('calculate postfix equation', () =>{
+		it('calculate postfix', () =>{
 				const sortedPostfix = [1,2,3,'x','+',4,'+'];
 				assert.equal(11, util.shuntyardCalc(sortedPostfix));
 		})
 		it('calculate postfix with float values', () => {
 			assert.equal(17.34,util.shuntyardCalc([12.34, 5, "+"]));
 		})
+		it('calculate postfix with negative numbers', () => {
+			assert.equal(-1,util.shuntyardCalc([2,-3,"+"]));
+		})
 	})
 
 	describe('grabLastToken', () =>{
-		it('grab last token if operators present', () =>{
+		it('grab last numeric token', () =>{
 			assert.equal("123",util.grabLastToken("99999+123"));
 		})
-		it('return 0 if "" is argument', () =>{
+		it('do nothing if arg is empty', () =>{
 			assert.equal("",util.grabLastToken(""));
 		})
-		it('grab operator if it is last value', () =>{
+		it('return operator if last char', () =>{
 			assert.equal("+",util.grabLastToken("99+"));
 		})
-		it('grab 0. if its a value if input is 0.', () =>{
+		it('handle floats', () =>{
 			assert.equal("0.",util.grabLastToken("0."));
 		})
 	})
