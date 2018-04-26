@@ -146,7 +146,8 @@ var model = {
     if(lastCall=="calculate" || cache ==""){
       cache = "0";
     }
-    return (cache.includes("."))
+    // Grab last numeric token and check if it has a "." in it
+    return (cache.match(/[\d.]+$/g)[0].includes("."))
       ? cache : cache+".";
   },
   pushNumber: function(cache, buttonValue, lastCall) {
@@ -248,10 +249,3 @@ $(document).ready(function(){
     }
   });
 });
-
-// General Notes
-// The final storage array before "=" should resemble ["1", "+", "2"] and process into a func
-// 2+4x8 = 34 (PEMDAS)
-// but official freecodecamp solution
-// shows 2+4+8 = 48
-// https://codepen.io/freeCodeCamp/full/rLJZrA
