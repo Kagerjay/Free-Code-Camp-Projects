@@ -3,7 +3,7 @@
 var operations = {
   'x': function(a,b) { return b*a},
   '÷': function(a,b) { return b/a},
-  '+': function(a,b) { return parseFloat(b)+parseInt(a)},
+  '+': function(a,b) { return b+a},
   '-': function(a,b) { return b-a},
 }
 const isOper = /(-|\+|÷|x)/;
@@ -96,10 +96,11 @@ var util = {
      */
     while(rawArr.length > 1){
       index = rawArr.findIndex(findFirstOperator);
-      firstNum = rawArr.splice(index-1,1);
-      secondNum = rawArr.splice(index-2,1);
+      firstNum = parseFloat(rawArr.splice(index-1,1));
+      secondNum = parseFloat(rawArr.splice(index-2,1));
       op = rawArr.splice(index-2,1);
       evalPartial = operations[op](firstNum, secondNum);
+      evalPartial = Math.round(evalPartial * 10000000000)/10000000000;
       rawArr.splice(index-2,0, evalPartial);
 
       infiniteLoopCounter++;

@@ -88,8 +88,11 @@ describe('MODEL', function(){
 		it("do order of operations", () =>{
 			assert.equal("5+5=10",model.calculate("5+5"));
 		})
-		it('handle float calc',()=>{
+		it('handle 1 float calc',()=>{
 			assert.equal("12.34+5=17.34", model.calculate("12.34+5"));
+		})
+		it('handle 2 float calc', () => {
+			assert.equal("6.6+3.3=9.9", model.calculate("6.6+3.3"));
 		})
 	})
 }) // END MODEL
