@@ -183,6 +183,9 @@ var model = {
     return cache;
   },
   calculate: function(cache, lastCall){
+    if( isOper.test(cache.slice(-1)) || cache.slice(-1) == "."){
+      return cache;
+    }
     let tempArr = util.splitNumAndOper(cache);
 
     // Edsger Dijkstra - Shuntyard Algorithm

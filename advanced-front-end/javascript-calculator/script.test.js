@@ -94,6 +94,9 @@ describe('MODEL', function(){
 		it('handle 2 float calc', () => {
 			assert.equal("6.6+3.3=9.9", model.calculate("6.6+3.3"));
 		})
+		it('forbid incomplete operation', () => {
+			assert.equal("6+", model.calculate("6+"));
+		})
 	})
 }) // END MODEL
 ///////////////////////////////////////////////////////////
