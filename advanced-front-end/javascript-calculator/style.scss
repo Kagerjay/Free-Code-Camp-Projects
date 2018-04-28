@@ -1,3 +1,11 @@
+/*********************** MOCHA TDD STYLES ****************/
+
+// Hide the annoyingly large stacktraces from mocha
+.error {
+  max-height: 25px !important;
+}
+
+/*********************** GLOBAL ****************/
 .container {
   display: flex;
   justify-content: center;
