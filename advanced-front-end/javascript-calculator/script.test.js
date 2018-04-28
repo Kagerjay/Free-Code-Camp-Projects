@@ -47,7 +47,7 @@ describe('MODEL', function(){
 			assert.equal("99", model.pushNumber('9', '9'));
 		})
 		it('reset if lastCall is calculate', () =>{
-			assert.equal("5",model.pushNumber("=999","5"));
+			assert.equal("5",model.pushNumber("999","5","calculate"));
 		})
 	})
 
@@ -58,8 +58,8 @@ describe('MODEL', function(){
 		it('forbid operators on empty cache', () =>{
 			assert.equal("",model.pushOperator("","+"));
 		})
-		it('behave normal if lastcall is calculate', () =>{
-			assert.equal("999+",model.pushOperator("=999","+"));
+		it('allow swappable operators', () => {
+			assert.equal("123+", model.pushOperator("123-", "+"));
 		})
 	})
 

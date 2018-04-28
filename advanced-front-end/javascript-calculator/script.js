@@ -152,12 +152,16 @@ var model = {
       ? cache : cache+".";
   },
   pushNumber: function(cache, buttonValue, lastCall) {
-    // model.reset does not remove "=", it is kept to tell if calculate function was last call made
-    return (cache.includes("=")) ? buttonValue : "" + cache+buttonValue;
+    return lastCall == "calculate" ? buttonValue : cache+buttonValue;
   },
   pushOperator: function(cache, buttonValue, lastCall){
-    return (cache == '' || isOper.test(cache.slice(-1)))
-      ? cache : cache+buttonValue;
+    if(cache==""){
+      return cache;
+    }
+    if(isOper.test(cache.slice(-1))){
+      cache = cache.slice(0,-1);
+    }
+    return cache+buttonValue;
   },
   clearAll: function(cache, lastCall){
     return '';
