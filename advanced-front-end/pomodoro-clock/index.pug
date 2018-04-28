@@ -1,0 +1,34 @@
+html
+  // <link rel="stylesheet" type="text/css" href="../bootstrap.css"/>
+  head
+    link(href='https://fonts.googleapis.com/css?family=Lobster', rel='stylesheet')
+    link(rel='stylesheet', type='text/css', href='https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css')
+    link(rel='stylesheet', type='text/css', href='style.css')
+  body
+    h1 FreeCodeCamp
+    .wrapper
+      // end container
+      .break
+        p Break Length
+        .timer
+          button -
+          span#break-time 5
+          button +
+      .session
+        p Session Length
+        .timer
+          button -
+          span#session-time 25
+          button +
+    #countdown-circle
+      h2 Session
+      #timer 25
+      
+      
+        
+    // end container
+    script(type='text/javascript', src='https://cdnjs.cloudflare.com/ajax/libs/mocha/2.2.5/mocha.min.js')
+    script(type='text/javascript', src='https://cdnjs.cloudflare.com/ajax/libs/chai/2.3.0/chai.min.js')
+    script(type='text/javascript', src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js')
+    script(type='text/javascript', src='script.js')
+    script(type='text/javascript', src='script.test.js')
