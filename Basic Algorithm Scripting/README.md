@@ -2,6 +2,7 @@ These are notes regarding what each program is supposed to do (unit test cases)
 
 
 1. [Reverse a String](01-reverse-a-string.js)
+
 *Reverse the provided string.
 You may need to turn the string into an array before you can reverse it.*
 ```javascript
@@ -11,7 +12,8 @@ reverseString("Howdy") // should become "ydwoH".
 reverseString("Greetings from Earth") // should return "htraE morf sgniteerG".
 ```
 
-2. Factorialize a Number
+2. [Factorialize a Number](02-factorialize-a-number.js)
+
 *Return the factorial of the provided integer.*
 ```javascript
 factorialize(5) // should return a number.
@@ -21,7 +23,8 @@ factorialize(20) // should return 2432902008176640000.
 factorialize(0) // should return 1.
 ```
 
-3. Check for Palindromes
+3. [Check for Palindromes](03-check-for-palindromes.js)
+
 *Return true if the given string is a palindrome. Otherwise, return false.*
 ```javascript
 palindrome("eye") // should return a boolean.
@@ -39,7 +42,8 @@ palindrome("0_0 (: /-\ :) 0-0") // should return true.
 palindrome("five|\_/|four") // should return false.
 ```
 
-4. Find the Longest Word in a String
+4. [Find the Longest Word in a String](04-find-the-longest-word-in-a-string.js)
+
 *Return the length of the longest word in the provided sentence.
 Your response should be a number.*
 ```javascript
@@ -51,7 +55,8 @@ findLongestWord("What is the average airspeed velocity of an unladen swallow") /
 findLongestWord("What if we try a super-long word such as otorhinolaryngology") // should return 19.
 ```
 
-5. Title Case a Sentence
+5. [Title Case a Sentence](05-title-case-a-sentence.js)
+
 *Return the provided string with the first letter of each word capitalized. Make sure the rest of the word is in lower case.
 you should also capitalize connecting words like "the" and "of".*
 ```javascript
@@ -61,7 +66,8 @@ titleCase("sHoRt AnD sToUt") // should return "Short And Stout".
 titleCase("HERE IS MY HANDLE HERE IS MY SPOUT") // should return "Here Is My Handle Here Is My Spout".
 ```
 
-6. Return Largest Numbers in Arrays
+6. [Return Largest Numbers in Arrays](06-return-largest-number-in-arrays.js)
+
 *Return an array consisting of the largest number from each provided sub-array. For simplicity, the provided array will contain exactly 4 sub-arrays.*
 ```javascript
 largestOfFour([[4, 5, 1, 3], [13, 27, 18, 26], [32, 35, 37, 39], [1000, 1001, 857, 1]]) // should return an array.
@@ -69,7 +75,8 @@ largestOfFour([[13, 27, 18, 26], [4, 5, 1, 3], [32, 35, 37, 39], [1000, 1001, 85
 largestOfFour([[4, 9, 1, 3], [13, 35, 18, 26], [32, 35, 97, 39], [1000000, 1001, 857, 1]]) // should return [9, 35, 97, 1000000].
 ```
 
-7. Confirm the Ending
+7. [Confirm the Ending](07-confirm-the-ending.js)
+
 *Check if a string (first argument, str) ends with the given target string (second argument, target).*
 ```javascript
 confirmEnding("Bastian", "n") // should return true.
@@ -82,7 +89,8 @@ confirmEnding("If you want to save our world, you must hurry. We dont know how m
 //Do not use the built-in method .endsWith() to solve the challenge.
 ```
 
-8. Repeat a string repeat a string
+8. [Repeat a string repeat a string](08-repeat-a-string-repeat-a-string.js)
+
 *Repeat a given string (first argument) num times (second argument). Return an empty string if num is not a positive number.*
 ```javascript
 repeatStringNumTimes("*", 3) // should return "***".
@@ -93,7 +101,8 @@ repeatStringNumTimes("*", 8) // should return "********".
 repeatStringNumTimes("abc", -2) // should return "".
 ```
 
-9. Truncate a string
+9. [Truncate a string](09-truncate-a-string.js)
+
 *Truncate a string (first argument) if it is longer than the given maximum string length (second argument). Return the truncated string with a ... ending.
 
 Note that inserting the three dots to the end will add to the string length.
@@ -108,7 +117,8 @@ truncateString("A-", 1) // should return "A...".
 truncateString("Absolutely Longer", 2) // should return "Ab...".
 ```
 
-10. Chunky Monkey
+10. [Chunky Monkey](10-chunky-monkey.js)
+
 *Write a function that splits an array (first argument) into groups the length of size (second argument) and returns them as a two-dimensional array.*
 ```javascript
 chunkArrayInGroups(["a", "b", "c", "d"], 2) // should return [["a", "b"], ["c", "d"]].
@@ -120,7 +130,8 @@ chunkArrayInGroups([0, 1, 2, 3, 4, 5, 6, 7, 8], 4) // should return [[0, 1, 2, 3
 chunkArrayInGroups([0, 1, 2, 3, 4, 5, 6, 7, 8], 2) // should return [[0, 1], [2, 3], [4, 5], [6, 7], [8]].
 ```
 
-11. Slasher Flick]
+11. [Slasher Flick](11-slasher-flick.js)
+
 *Return the remaining elements of an array after chopping off n elements from the head.*
 *The head means the beginning of the array, or the zeroth index.*
 ```javascript
@@ -132,7 +143,15 @@ slasher(["burgers", "fries", "shake"], 1) // should return ["fries", "shake"].
 slasher([1, 2, "chicken", 3, "potatoes", "cheese", 4], 5) // should return ["cheese", 4].
 ```
 
-12. Mutations
+12. [Mutations](12-mutations.js)
+
+*Return true if the string in the first element of the array contains all of the letters of the string in the second element of the array.
+
+For example, ["hello", "Hello"], should return true because all of the letters in the second string are present in the first, ignoring case.
+
+The arguments ["hello", "hey"] should return false because the string "hello" does not contain a "y".
+
+Lastly, ["Alien", "line"], should return true because all of the letters in "line" are present in "Alien"*
 ```javascript
 mutation(["hello", "hey"]) // should return false.
 mutation(["hello", "Hello"]) // should return true.
@@ -145,7 +164,8 @@ mutation(["hello", "neo"]) // should return false.
 mutation(["voodoo", "no"]) // should return false.
 ```
 
-13. Falsy Bouncer
+13. [Falsy Bouncer](13-falsy-bouncer.js)
+
 *Remove all falsy values from an array.
 Falsy values in JavaScript are false, null, 0, "", undefined, and NaN.*
 ```javascript
@@ -155,7 +175,8 @@ bouncer([false, null, 0, NaN, undefined, ""]) // should return [].
 bouncer([1, null, NaN, 2, undefined]) // should return [1, 2].
 ```
 
-14. Seek and Destroy
+14. [Seek and Destroy](14-seek-and-destroy.js)
+
 *You will be provided with an initial array (the first argument in the destroyer function), followed by one or more arguments. Remove all elements from the initial array that are of the same value as these arguments.*
 ```javascript
 destroyer([1, 2, 3, 1, 2, 3], 2, 3) // should return [1, 1].
@@ -165,7 +186,8 @@ destroyer([2, 3, 2, 3], 2, 3) // should return [].
 destroyer(["tree", "hamburger", 53], "tree", 53) // should return ["hamburger"].
 ```
 
-15. Where do I belong
+15. [Where do I belong](15-where-do-i-belong.js)
+
 *Return the lowest index at which a value (second argument) should be inserted into an array (first argument) once it has been sorted. The returned value should be a number.
 
 For example, getIndexToIns([1,2,3,4], 1.5) should return 1 because it is greater than 1 (index 0), but less than 2 (index 1).
@@ -181,7 +203,8 @@ getIndexToIns([2, 20, 10], 19) // should return 2.
 getIndexToIns([2, 5, 10], 15) // should return 3.
 ```
 
-16. Caesars Cipher
+16. [Caesars Cipher](16-caesars-cipher.js)
+
 *One of the simplest and most widely known ciphers is a Caesar cipher, also known as a `shift cipher`. In a shift cipher the meanings of the letters are shifted by some set amount.
 
 A common modern use is the ROT13 cipher, where the values of the letters are shifted by 13 places. Thus 'A' ↔ 'N', 'B' ↔ 'O' and so on.
