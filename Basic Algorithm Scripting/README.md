@@ -1,7 +1,9 @@
 These are notes regarding what each program is supposed to do (unit test cases)
 
 
-1. Reverse a String 
+1. [Reverse a String](01-reverse-a-string.js)
+*Reverse the provided string.
+You may need to turn the string into an array before you can reverse it.*
 ```javascript
 reverseString("hello") // should return a string.
 reverseString("hello") // should become "olleh".
@@ -10,6 +12,7 @@ reverseString("Greetings from Earth") // should return "htraE morf sgniteerG".
 ```
 
 2. Factorialize a Number
+*Return the factorial of the provided integer.*
 ```javascript
 factorialize(5) // should return a number.
 factorialize(5) // should return 120.
@@ -19,6 +22,7 @@ factorialize(0) // should return 1.
 ```
 
 3. Check for Palindromes
+*Return true if the given string is a palindrome. Otherwise, return false.*
 ```javascript
 palindrome("eye") // should return a boolean.
 palindrome("eye") // should return true.
@@ -36,6 +40,8 @@ palindrome("five|\_/|four") // should return false.
 ```
 
 4. Find the Longest Word in a String
+*Return the length of the longest word in the provided sentence.
+Your response should be a number.*
 ```javascript
 findLongestWord("The quick brown fox jumped over the lazy dog") // should return a number.
 findLongestWord("The quick brown fox jumped over the lazy dog") // should return 6.
@@ -46,6 +52,8 @@ findLongestWord("What if we try a super-long word such as otorhinolaryngology") 
 ```
 
 5. Title Case a Sentence
+*Return the provided string with the first letter of each word capitalized. Make sure the rest of the word is in lower case.
+you should also capitalize connecting words like "the" and "of".*
 ```javascript
 titleCase("I'm a little tea pot") // should return a string.
 titleCase("I'm a little tea pot") // should return "I'm A Little Tea Pot".
@@ -54,6 +62,7 @@ titleCase("HERE IS MY HANDLE HERE IS MY SPOUT") // should return "Here Is My Han
 ```
 
 6. Return Largest Numbers in Arrays
+*Return an array consisting of the largest number from each provided sub-array. For simplicity, the provided array will contain exactly 4 sub-arrays.*
 ```javascript
 largestOfFour([[4, 5, 1, 3], [13, 27, 18, 26], [32, 35, 37, 39], [1000, 1001, 857, 1]]) // should return an array.
 largestOfFour([[13, 27, 18, 26], [4, 5, 1, 3], [32, 35, 37, 39], [1000, 1001, 857, 1]]) // should return [27,5,39,1001].
@@ -61,6 +70,7 @@ largestOfFour([[4, 9, 1, 3], [13, 35, 18, 26], [32, 35, 97, 39], [1000000, 1001,
 ```
 
 7. Confirm the Ending
+*Check if a string (first argument, str) ends with the given target string (second argument, target).*
 ```javascript
 confirmEnding("Bastian", "n") // should return true.
 confirmEnding("Connor", "n") // should return false.
@@ -73,6 +83,7 @@ confirmEnding("If you want to save our world, you must hurry. We dont know how m
 ```
 
 8. Repeat a string repeat a string
+*Repeat a given string (first argument) num times (second argument). Return an empty string if num is not a positive number.*
 ```javascript
 repeatStringNumTimes("*", 3) // should return "***".
 repeatStringNumTimes("abc", 3) // should return "abcabcabc".
@@ -83,6 +94,11 @@ repeatStringNumTimes("abc", -2) // should return "".
 ```
 
 9. Truncate a string
+*Truncate a string (first argument) if it is longer than the given maximum string length (second argument). Return the truncated string with a ... ending.
+
+Note that inserting the three dots to the end will add to the string length.
+
+However, if the given maximum string length num is less than or equal to 3, then the addition of the three dots does not add to the string length in determining the truncated string.*
 ```javascript
 truncateString("A-tisket a-tasket A green and yellow basket", 11) // should return "A-tisket...".
 truncateString("Peter Piper picked a peck of pickled peppers", 14) // should return "Peter Piper...".
@@ -93,6 +109,7 @@ truncateString("Absolutely Longer", 2) // should return "Ab...".
 ```
 
 10. Chunky Monkey
+*Write a function that splits an array (first argument) into groups the length of size (second argument) and returns them as a two-dimensional array.*
 ```javascript
 chunkArrayInGroups(["a", "b", "c", "d"], 2) // should return [["a", "b"], ["c", "d"]].
 chunkArrayInGroups([0, 1, 2, 3, 4, 5], 3) // should return [[0, 1, 2], [3, 4, 5]].
@@ -103,7 +120,9 @@ chunkArrayInGroups([0, 1, 2, 3, 4, 5, 6, 7, 8], 4) // should return [[0, 1, 2, 3
 chunkArrayInGroups([0, 1, 2, 3, 4, 5, 6, 7, 8], 2) // should return [[0, 1], [2, 3], [4, 5], [6, 7], [8]].
 ```
 
-11. Slasher Flick
+11. Slasher Flick]
+*Return the remaining elements of an array after chopping off n elements from the head.*
+*The head means the beginning of the array, or the zeroth index.*
 ```javascript
 slasher([1, 2, 3], 2) // should return [3].
 slasher([1, 2, 3], 0) // should return [1, 2, 3].
@@ -127,6 +146,8 @@ mutation(["voodoo", "no"]) // should return false.
 ```
 
 13. Falsy Bouncer
+*Remove all falsy values from an array.
+Falsy values in JavaScript are false, null, 0, "", undefined, and NaN.*
 ```javascript
 bouncer([7, "ate", "", false, 9]) // should return [7, "ate", 9].
 bouncer(["a", "b", "c"]) // should return ["a", "b", "c"].
@@ -135,6 +156,7 @@ bouncer([1, null, NaN, 2, undefined]) // should return [1, 2].
 ```
 
 14. Seek and Destroy
+*You will be provided with an initial array (the first argument in the destroyer function), followed by one or more arguments. Remove all elements from the initial array that are of the same value as these arguments.*
 ```javascript
 destroyer([1, 2, 3, 1, 2, 3], 2, 3) // should return [1, 1].
 destroyer([1, 2, 3, 5, 1, 2, 3], 2, 3) // should return [1, 5, 1].
@@ -144,6 +166,11 @@ destroyer(["tree", "hamburger", 53], "tree", 53) // should return ["hamburger"].
 ```
 
 15. Where do I belong
+*Return the lowest index at which a value (second argument) should be inserted into an array (first argument) once it has been sorted. The returned value should be a number.
+
+For example, getIndexToIns([1,2,3,4], 1.5) should return 1 because it is greater than 1 (index 0), but less than 2 (index 1).
+
+Likewise, getIndexToIns([20,3,5], 19) should return 2 because once the array has been sorted it will look like [3,5,20] and 19 is less than 20 (index 2) and greater than 5 (index 1).*
 ```javascript
 getIndexToIns([10, 20, 30, 40, 50], 35) // should return 3.
 getIndexToIns([10, 20, 30, 40, 50], 30) // should return 2.
@@ -155,6 +182,13 @@ getIndexToIns([2, 5, 10], 15) // should return 3.
 ```
 
 16. Caesars Cipher
+*One of the simplest and most widely known ciphers is a Caesar cipher, also known as a `shift cipher`. In a shift cipher the meanings of the letters are shifted by some set amount.
+
+A common modern use is the ROT13 cipher, where the values of the letters are shifted by 13 places. Thus 'A' ↔ 'N', 'B' ↔ 'O' and so on.
+
+Write a function which takes a ROT13 encoded string as input and returns a decoded string.
+
+All letters will be uppercase. Do not transform any non-alphabetic character (i.e. spaces, punctuation), but do pass them on.*
 ```javascript
 rot13("SERR PBQR PNZC") // should decode to "FREE CODE CAMP"
 rot13("SERR CVMMN!") // should decode to "FREE PIZZA!"
