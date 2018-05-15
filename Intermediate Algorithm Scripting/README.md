@@ -19,13 +19,13 @@ Compare two arrays and return a new array with any items only found in one of th
 
 ```JavaScript
 diffArray([1, 2, 3, 5], [1, 2, 3, 4, 5]) // should return an array.
-["diorite", "andesite", "grass", "dirt", "pink wool", "dead shrub"], ["diorite", "andesite", "grass", "dirt", "dead shrub"] // should return ["pink wool"].
-["andesite", "grass", "dirt", "pink wool", "dead shrub"], ["diorite", "andesite", "grass", "dirt", "dead shrub"] // should return ["diorite", "pink wool"].
-["andesite", "grass", "dirt", "dead shrub"], ["andesite", "grass", "dirt", "dead shrub"] // should return [].
-[1, 2, 3, 5], [1, 2, 3, 4, 5] // should return [4].
-[1, "calf", 3, "piglet"], [1, "calf", 3, 4] // should return ["piglet", 4].
-[], ["snuffleupagus", "cookie monster", "elmo"] // should return ["snuffleupagus", "cookie monster", "elmo"].
-[1, "calf", 3, "piglet"], [7, "filly"] // should return [1, "calf", 3, "piglet", 7, "filly"].
+diffArray(["diorite", "andesite", "grass", "dirt", "pink wool", "dead shrub"], ["diorite", "andesite", "grass", "dirt", "dead shrub"]) // should return ["pink wool"].
+diffArray(["andesite", "grass", "dirt", "pink wool", "dead shrub"], ["diorite", "andesite", "grass", "dirt", "dead shrub"]) // should return ["diorite", "pink wool"].
+diffArray(["andesite", "grass", "dirt", "dead shrub"], ["andesite", "grass", "dirt", "dead shrub"]) // should return [].
+diffArray([1, 2, 3, 5], [1, 2, 3, 4, 5]) // should return [4].
+diffArray([1, "calf", 3, "piglet"], [1, "calf", 3, 4]) // should return ["piglet", 4].
+diffArray([], ["snuffleupagus", "cookie monster", "elmo"]) // should return ["snuffleupagus", "cookie monster", "elmo"].
+diffArray([1, "calf", 3, "piglet"], [7, "filly"]) // should return [1, "calf", 3, "piglet", 7, "filly"].
 ```
 
 ## [03-roman-numeral-converter](03-roman-numeral-converter.js)
@@ -66,7 +66,7 @@ convertToRoman(3999) // should return "MMMCMXCIX"
 
 Make a function that looks through an array of objects (first argument) and returns an array of all objects that have matching property and value pairs (second argument). Each property and value pair of the source object has to be present in the object from the collection if it is to be included in the returned array.
 
-For example, if the first argument is [{ first: "Romeo", last: "Montague" }, { first: "Mercutio", last: null }, { first: "Tybalt", last: "Capulet" }], and the second argument is { last: "Capulet" }, then you must return the third object from the array (the first argument), because it contains the property and its value, that was passed on as the second argument.*
+For example, if the first argument is `[{ first: "Romeo", last: "Montague" }, { first: "Mercutio", last: null }, { first: "Tybalt", last: "Capulet" }]`, and the second argument is `{ last: "Capulet" }`, then you must return the third object from the array (the first argument), because it contains the property and its value, that was passed on as the second argument.*
 
 ```JavaScript
 whatIsInAName([{ first: "Romeo", last: "Montague" }, { first: "Mercutio", last: null }, { first: "Tybalt", last: "Capulet" }], { last: "Capulet" }) // should return [{ first: "Tybalt", last: "Capulet" }].
@@ -322,13 +322,13 @@ truthCheck([{"single": "double"}, {"single": NaN}], "single") // should return f
 
 Create a function that sums two arguments together. If only one argument is provided, then return a function that expects one argument and returns the sum.
 
-For example, addTogether(2, 3) should return 5, and addTogether(2) should return a function.
+For example, `addTogether(2, 3)` should return `5`, and `addTogether(2)` should return a function.
 
 Calling this returned function with a single argument will then return the sum:
 
-var sumTwoAnd = addTogether(2);
+`var sumTwoAnd = addTogether(2);`
 
-sumTwoAnd(3) returns 5.
+`sumTwoAnd(3)` returns `5`.
 
 If either argument isn't a valid number, return undefined.
 
