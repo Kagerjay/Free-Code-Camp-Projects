@@ -67,12 +67,13 @@ If `value` is empty (`""`), delete the given `prop` property from the album.
 Use `bracket notation` when accessing object properties with variables.
 
 ```JavaScript
-After updateRecords(5439, "artist", "ABBA"), artist // should be "ABBA"
-After updateRecords(5439, "tracks", "Take a Chance on Me"), tracks // should have "Take a Chance on Me" as the last element.
-After updateRecords(2548, "artist", ""), artist // should not be set
-After updateRecords(1245, "tracks", "Addicted to Love"), tracks // should have "Addicted to Love" as the last element.
-After updateRecords(2468, "tracks", "Free"), tracks // should have "1999" as the first element.
-After updateRecords(2548, "tracks", ""), tracks // should not be set
+// AFTER EACH
+updateRecords(5439, "artist", "ABBA"), // artist should be "ABBA"
+updateRecords(5439, "tracks", "Take a Chance on Me"), // tracks should have "Take a Chance on Me" as the last element.
+updateRecords(2548, "artist", ""), // artist should not be set
+updateRecords(1245, "tracks", "Addicted to Love"), // tracks should have "Addicted to Love" as the last element.
+updateRecords(2468, "tracks", "Free"), // tracks should have "1999" as the first element.
+updateRecords(2548, "tracks", ""), // tracks should not be set
 ```
 
 ## [03-symmetric-difference](03-symmetric-difference.js)
