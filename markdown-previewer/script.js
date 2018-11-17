@@ -3,6 +3,10 @@
 document.getElementById('content').innerHTML =
   marked('# Marked in browser\n\nRendered by **marked**.');
 
+// User Story #1: I can see a textarea element with a corresponding id="editor".
+
+// User Story #2: I can see an element with a corresponding id="preview".
+
 // You may add additional external JS and CSS as needed to complete the project, however the current external resource MUST remain in place for the tests to work. BABEL must also be left in place. 
 
 /***********
