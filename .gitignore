@@ -1,4 +1,5 @@
 /node_modules
+/*/node_modules
 
 # DUMPSTER CODE
 # Dump.html is code I'd normally throw out, and its comments before a commit
